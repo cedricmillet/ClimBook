@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EcranProgressionComponent } from './main/ecran-progression/ecran-progression.component';
 import { EcranClassementsComponent } from './main/ecran-classements/ecran-classements.component';
 import { EcranBlocsComponent } from './main/ecran-blocs/ecran-blocs.component';
+import { PlanSalleComponent } from './main/ecran-blocs/plan-salle/plan-salle.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { EcranBlocsComponent } from './main/ecran-blocs/ecran-blocs.component';
     MainComponent,
     EcranProgressionComponent,
     EcranClassementsComponent,
-    EcranBlocsComponent
+    EcranBlocsComponent,
+    PlanSalleComponent
   ],
   imports: [
     BrowserModule,

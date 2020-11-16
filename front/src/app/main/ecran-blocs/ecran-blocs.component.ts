@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-ecran-blocs',
   templateUrl: './ecran-blocs.component.html',
@@ -10,6 +11,8 @@ export class EcranBlocsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
+
 
 }
