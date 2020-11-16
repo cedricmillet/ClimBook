@@ -1,0 +1,31 @@
+
+
+nav {
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 25%;
+    background: #fff;
+
+    /* ombre portee */
+    -webkit-box-shadow: 10px 0px 24px -13px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 0px 24px -13px rgba(0,0,0,0.75);
+    box-shadow: 10px 0px 24px -13px rgba(0,0,0,0.75);
+}
+
+main {
+    background: #F5F5F5;
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    width: 75%;
+}
+
+main>.container {
+    --main-padding: 35px;
+    width: calc(100% - 2 * var(--main-padding));
+    margin: auto;
+}

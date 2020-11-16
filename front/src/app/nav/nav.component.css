@@ -1,0 +1,22 @@
+nav {
+    background: blue;
+    width: 20%;
+}
+
+
+.mat-list-item {
+    outline: none;
+}
+.menuitem:hover {
+    background-color: rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
+
+.menuitem.active {
+    background-color: rgba(0, 0, 0, .15);
+    font-weight: bold;
+}
+/*
+mat-icon {
+    margin-right: 1em
+}*/

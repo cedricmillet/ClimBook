@@ -1,1 +1,19 @@
-<p>nav works!</p>
+<img src="./assets/img/logo.png" alt="logo_salle" />
+
+<mat-list role="list">
+
+
+    <mat-list-item class="menuitem" role="listitem" [routerLink]="['/les-blocs']" [routerLinkActive]="['active']">
+        <mat-icon mat-list-icon>list</mat-icon> 
+        <div mat-line>Les blocs</div>
+    </mat-list-item>
+    <mat-list-item class="menuitem" role="listitem" [routerLink]="['/classements']" [routerLinkActive]="['active']">
+        <mat-icon mat-list-icon>emoji_events</mat-icon>
+        <div mat-line>Classements</div>
+    </mat-list-item>
+    <mat-list-item class="menuitem" role="listitem"  [routerLink]="['/progression']" [routerLinkActive]="['active']">
+        <mat-icon mat-list-icon>trending_up</mat-icon>
+        <div mat-line>Ma progression</div>
+    </mat-list-item>
+</mat-list>
+
