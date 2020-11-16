@@ -4,7 +4,8 @@
   "description": "backend pour climb book",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/backend.ts --watch src/**/*"
   },
   "author": "Cédric MILLET",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "@types/node": "^14.14.7",
     "chalk": "^4.1.0",
     "nodemon": "^2.0.6",
+    "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
   }
 }
