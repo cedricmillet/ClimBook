@@ -1,0 +1,11 @@
+{
+  "name": "climb-book-backend",
+  "version": "1.0.0",
+  "description": "backend pour climb book",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cédric MILLET",
+  "license": "ISC"
+}
