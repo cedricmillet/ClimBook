@@ -1,0 +1,7 @@
+{
+  "name": "Documentation API",
+  "version": "0.1.0",
+  "description": "Doc destiné au developpeur frontend",
+  "title": "Documentation du backend",
+  "url" : "./api/v1"
+}

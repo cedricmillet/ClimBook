@@ -1,0 +1,1 @@
+cd back && "build.bat" && cd ../front && "build.bat"
