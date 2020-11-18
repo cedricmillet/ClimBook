@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
       "baseUrl": ".",
-      "outDir": "./dist",
+      "outDir": "./build",
       "target": "es2018",
       "lib": [
         "es7",
@@ -25,7 +25,7 @@
     "exclude": [
       "node_modules",
       "./public",
-      "dist",
+      "build",
       "test"
     ]
   }
