@@ -1,0 +1,66 @@
+version: '3.1'
+
+# Networks
+networks:
+  backend_network:
+    driver: bridge
+
+# Services
+services:
+  # Database
+  db:
+    image: postgres:12
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=climbook
+    volumes:
+      - ./data_db:/var/lib/postgresql/data
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend_network
+  # Database admin tool
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - 5050:80
+    volumes:
+      - ./data_pgadmin:/var/lib/pgadmin
+    networks:
+      - backend_network
+    depends_on:
+      - db
+    logging: # pgadmin a tendance à flood la console pour rien...
+      driver: none 
+  # Backend
+  backend:
+    image: backend:latest
+    build: ./back/
+    environment:
+      - API_PORT=7777
+      - API_PREFIX=/api/v2/
+    ports:
+      - 8080:7777
+    networks:
+      - backend_network
+    depends_on:
+      - db
+  # FrontEnd
+  frontend:
+    image: frontend:latest
+    build: ./front/
+    ports:
+      - 4321:80
+    depends_on:
+      - backend
+
+
+# PUSH
+# docker tag frontend thecyrion/bdd_cnam:front-0.1 && docker push thecyrion/bdd_cnam:front-0.1
+# docker tag backend thecyrion/bdd_cnam:back-0.1 && docker push thecyrion/bdd_cnam:back-0.1
