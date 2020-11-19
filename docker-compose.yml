@@ -57,8 +57,7 @@ services:
     build: ./front/
     ports:
       - 4321:80
-    depends_on:
-      - backend
+
 
 
 # PUSH
