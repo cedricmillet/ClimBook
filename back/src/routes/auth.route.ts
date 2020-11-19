@@ -3,6 +3,7 @@ import {AuthCheck} from "../guards/login.guard";
 import { User , Users} from "../entities/user.entity";
 import * as session from 'express-session';
 import { NotFound } from "@tsed/exceptions";
+import * as chalk from "chalk";
 
 // https://tsed.io/tutorials/session.html
 
@@ -33,12 +34,15 @@ export class AuthController {
   async login(@Required() @BodyParams("login") login: string, @Required() @BodyParams("password") pass: string, @Session("user") user: any) {
     console.log(`>>> Identification utilisateur (${login}, ${pass})`);
     try {
-      const usr: User = await Users.find(login, pass);
+      const usr: User = await Users.login(login, pass);
+      if (!(usr instanceof User)) throw new Error(`introuvable en bdd ${login}/${pass} : usr=${usr}`);
+      console.log(chalk.inverse.green(">>> LOGIN/PASS VALIDE POUR L'UTILISATEUR : " + login))
       /** Mise a jour de la session coté serveur */
       user.id = usr.getId();
+      user.role = (await usr.getRole()).getRoleName();
       return JSON.stringify({ success:true, user: usr });
     } catch (error) {
-      throw new NotFound("Unknown User");
+      throw new NotFound("Unknown User : " + error);
     }    
   }
 
@@ -50,7 +54,7 @@ export class AuthController {
   @Post("/logout")
   async logout(@Session("user") user: any) {
     user.id = null;
-    user = null;
+    user.role = null;
   }
 
 
@@ -60,8 +64,14 @@ export class AuthController {
    * @apiSuccess user Infos sur l'utilisateur connecté
    */
   @Get("/status")
-  @UseAuth(AuthCheck, {role: "admin"}) // or for specific endpoints
-  public check() {
-    return "OK !!!!"
+  @UseAuth(AuthCheck) // check utilisateur identifié
+  public check(@Session("user") user: any) {
+    return "OK !!!! : user =    " + JSON.stringify(user)
+  }
+
+  @Get("/admin")
+  @UseAuth(AuthCheck, {role: "admin"}) // check utilisateur admin
+  public admincheck(@Session("user") user: any) {
+    return "OK !!!! : user =    " + JSON.stringify(user)
   }
 }

@@ -1,5 +1,8 @@
 import { string } from '@tsed/schema';
 import { Entity } from './index';
+import { DAO_Utilisateur } from '../dao/utilisateurs.dao';
+import { Role } from './role.entity';
+import { DAO_Role } from '../dao/roles.dao';
 
 export enum UserFields {
   id = 'id',
@@ -17,6 +20,7 @@ export class User implements Entity {
   /** ----------------------| propriétés de l'entité          */
   //protected id: number;
   protected data = {};
+  private role: Role;
   
   /** ----------------------| getters / setters publics         */
   getId = () => this.data['id'];
@@ -28,17 +32,12 @@ export class User implements Entity {
   /**
   * Retourne le role de l'utilisateur
   */
-  public getRole(): string {
-    return "admin";
+  public async getRole(): Promise<Role> {
+    const roleId: number = this.get(UserFields.roleId);
+    const role: Role = await new DAO_Role().getById(roleId);
+    return role;
   }
   
-  /**
-  * Vérifie que le mot de passe haché stocké en bdd correspond à un mdp donné en clair
-  * @param password Mot de passe en clair
-  */
-  public verifyPassword(password:string) : boolean {
-    return true;
-  }
 }
 
 
@@ -55,7 +54,7 @@ export class UserBuilder extends User {
     this.builderData.forEach(prop => user.set(UserFields[prop.field], prop.value));
     return user;
   }
-  
+
   /** propriétés de l'entité */
   public setId(id: number) {
     this.builderData.push({
@@ -101,23 +100,8 @@ export class UserBuilder extends User {
 */
 export class Users {
   
-  public static find(login: string, pass: string): Promise<User> {
-    return new Promise((res, reject) => {
-      // reject(new Error("Introuvable"))
-      res(new User());
-    });
-  }
-  
-  public static findByID(userID: number) {
-    return new User();
-  }
-  
-  /**
-  * 
-  * @param sessionData 
-  */
-  public static fromSession(sessionData: any) : User {
-    if (!sessionData.id) return null;
-    return Users.findByID(sessionData.id);
+  public static async login(login: string, pass: string): Promise<User> {
+    const user = await new DAO_Utilisateur().login(login, pass);
+    return user;
   }
 }

@@ -58,5 +58,18 @@ export class DAO_Utilisateur extends DAO<User> {
     return super.update(usr);
   }
 
+  /**
+   * ----------------------------------------------------------------
+   *        DAO SPECIFIQUES AUX UTILISATEURS
+   * ----------------------------------------------------------------
+   */
+  public async login(login:string, pass:string): Promise<User|null> {
+    const query: string = `SELECT * FROM ${this.getTableName()} WHERE pseudo=$1 AND mdp=crypt($2, mdp) LIMIT 1`;
+    const values = [login, pass];
+    const pool = DBManager.getPool();
+    const result = await pool.query(query, values);
+    return result.rows.length==1 ? this.fromResultSet(result.rows[0]) : null;
+  }
+
 
 }

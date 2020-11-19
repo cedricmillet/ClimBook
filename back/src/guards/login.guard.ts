@@ -14,9 +14,11 @@ export class AuthCheck implements IMiddleware {
 
     console.log(">>>> access autorise utilisateur = ", JSON.stringify(user))
 
-/*
-    if (request.user?.role !== options.role) {
-      throw new Forbidden("Forbidden role interdit");
-    }*/
+    if (options?.role) {
+      if (user.role !== options.role) {
+        throw new Forbidden(`FORBIDDEN: vous devez disposer du role <${options.role}>. Vous etes actuellement <${user.role}>`);
+      }
+    }
+    
   }
 }
