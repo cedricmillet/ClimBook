@@ -1,4 +1,13 @@
+import { string } from '@tsed/schema';
 import { Entity } from './index';
+
+export enum UserFields {
+  id = 'id',
+  roleId = 'roleId',
+  pseudo = 'pseudo',
+  mdp = 'mdp',
+  email = 'email',
+};
 
 /**
 * Classe entité
@@ -6,18 +15,13 @@ import { Entity } from './index';
 export class User implements Entity {
   
   /** ----------------------| propriétés de l'entité          */
-  protected id: number;
-  protected roleId: number;
-  protected pseudo: string;
-  protected mdp: string;
-  protected email: string;
+  //protected id: number;
+  protected data = {};
   
-  /** ----------------------| getters publics                 */
-  getId = () => this.id;
-  getRoleId = () => this.roleId;
-  getEmail = () => this.email;
-  getPseudo = () => this.pseudo;
-  getMdp = () => this.mdp;
+  /** ----------------------| getters / setters publics         */
+  getId = () => this.data['id'];
+  get = (field: UserFields) => this.data[field];
+  set = (field: UserFields, value: any) => this.data[field] = value;
   
   /** ----------------------| methodes spécifiques            */
   
@@ -39,38 +43,57 @@ export class User implements Entity {
 
 
 export class UserBuilder extends User {
+  private builderData : {field:string, value:any}[] = [];
 
-  
   constructor() {
     super();
   }
 
+  /** !!! build !!! */
+  public build() : User {
+    const user = new User();
+    this.builderData.forEach(prop => user.set(UserFields[prop.field], prop.value));
+    return user;
+  }
+  
   /** propriétés de l'entité */
   public setId(id: number) {
-    super.id = id;
+    this.builderData.push({
+      field: UserFields.id,
+      value: id
+    });
     return this;
   }
-  public setEmail(email: string) {
-    this.email = email;
+  public setEmail(email: string): UserBuilder {
+    this.builderData.push({
+      field: UserFields.email,
+      value: email
+    });
     return this;
   }
   public setPseudo(pseudo:string) {
-    this.pseudo = pseudo;
+    this.builderData.push({
+      field: UserFields.pseudo,
+      value: pseudo
+    });
     return this;
   }
   public setMdp(mdp:string) {
-    this.mdp = mdp;
+    this.builderData.push({
+      field: UserFields.mdp,
+      value: mdp
+    });
     return this;
   }
   public setRoleId(roleId: number) {
-    this.roleId = roleId;
+    this.builderData.push({
+      field: UserFields.roleId,
+      value: roleId
+    });
     return this;
   }
   
-  /** !!! build !!! */
-  public build() : User {
-    return <User>this;
-  }
+  
 }
 
 /**

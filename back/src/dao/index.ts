@@ -1,7 +1,7 @@
 import * as chalk from "chalk";
 import { Entity } from "../entities";
 import { config } from "../cfg/config";
-const { Pool } = require('pg'); // https://node-postgres.com/features/queries
+const { Pool, Client } = require('pg'); // https://node-postgres.com/features/queries
 
 export class DBManager {
 
@@ -56,16 +56,15 @@ export abstract class DAO<E extends Entity> {
 
   
   /**
-   * Retourne toutes les entités de la table
+   * Retourne une entité par son id
    */
-  public async getById(id:number): Promise<E[]> {
+  public async getById(id:number): Promise<E> {
     try {
       const query: string = `SELECT * FROM ${this.getTableName()} WHERE id=$1`;
       const values = [id];
       const pool = DBManager.getPool();
       const result = await pool.query(query, values);
-      
-      return <E[]>this.resultSet2Entities(result.rows);
+      return <E>this.resultSet2Entities(result.rows[0]);
     } catch (err) {
       throw new Error("AbstractDAO error = "+err);
     }
@@ -89,13 +88,14 @@ export abstract class DAO<E extends Entity> {
    * Insérer une entité dasn sa table
    * Retourne l'id de la ligne insérée
    */
-  public async insert(e : E): Promise<number> {
+  public async insert(e : E): Promise<E> {
     try {
       const query: string = `${this.persistQuery} RETURNING id`;
       const values = this.nextQueryValues;
       const pool = DBManager.getPool();
       const result = await pool.query(query, values);
-      return result.rows[0].id;
+      const insertId = result.rows[0].id;
+      return await this.getById(insertId);
     } catch (err) {
       throw new Error("AbstractDAO error = "+ err);
     }
@@ -154,6 +154,7 @@ export abstract class DAO<E extends Entity> {
 
   /** Methodes des classes enfants */
   public abstract getTableName(): string;
-  protected abstract fromResultSet(resultSet:any) : E;
+  protected abstract fromResultSet(resultSet: any): E;
+  protected abstract getEntityValues(e: E) : any[];
 }
 
