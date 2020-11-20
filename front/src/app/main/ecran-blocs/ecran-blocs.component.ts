@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { VoieService } from '../../services/voie.service';
 @Component({
   selector: 'app-ecran-blocs',
   templateUrl: './ecran-blocs.component.html',
@@ -7,9 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EcranBlocsComponent implements OnInit {
 
-  constructor() { }
+  public filters = [
+    {key: 'idasc', name: 'Les plus récent'},
+    {key: 'easy', name: 'Les plus faciles'},
+  ];
+
+  public voies;
+
+  constructor(private blocService: VoieService) { }
 
   ngOnInit(): void {
+    this.refreshBlockList();
   }
 
+  async refreshBlockList() {
+    this.voies = await this.blocService.getAll();
+  }
+
+
+  selectBloc(bloc) {
+    
+  }
 }

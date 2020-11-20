@@ -1,0 +1,22 @@
+header {
+    background: var(--main-color);
+    color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
+    padding-left: 2em;
+}
+
+#pageTitle {
+    line-height: 3.2em;
+    font-size: 1em;
+}
+
+#loginButton {
+    background: transparent;
+    margin-top:50%;
+    transform: translateY(-50%);
+}
+
+.rightsection {
+    width: 3em;
+    float:right;
+}

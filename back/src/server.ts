@@ -10,12 +10,9 @@ import * as cookieParser from "cookie-parser";
 import * as methodOverride from "method-override";
 import * as cors from 'cors';
 import * as session from "express-session";
-//import * as passport from "passport";
-//import {LocalStrategy} from "passport-local";
-var LocalStrategy   = require('passport-local');
+
 /** Env config */
 import { config } from './cfg/config';
-import { User } from "./entities/user.entity";
 
 import {CreateRequestSessionMiddleware} from "./middlewares/CreateRequestSession.middleware";
 
@@ -56,13 +53,11 @@ export class Server {
     // Ajout des sessions
     this.app.getApp().set("trust proxy", 1); // trust first proxy
     this.app.use(session({
-      secret: "keyboard cat",
+      secret: "a5d9e1f7afa93x1q4",  // signature des cookies
       resave: false,
       saveUninitialized: true,
       cookie: {secure: false}
     }));
     this.app.use(CreateRequestSessionMiddleware);
-    
-    
   }
 }

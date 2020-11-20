@@ -8,16 +8,14 @@ export class AuthCheck implements IMiddleware {
     const options = ctx.endpoint.get(AuthCheck) || {};
 
 
-    if (!user || !user.id) { // passport.js method to check auth
+    if (!user || ! user.id) { // passport.js method to check auth
       throw new Unauthorized("Utilisateur non identifié : " + JSON.stringify(user));
     }
 
-    console.log(">>>> access autorise utilisateur = ", JSON.stringify(user))
+    console.log(">>>> access autorise utilisateur = ", JSON.stringify(user));
 
-    if (options?.role) {
-      if (user.role !== options.role) {
-        throw new Forbidden(`FORBIDDEN: vous devez disposer du role <${options.role}>. Vous etes actuellement <${user.role}>`);
-      }
+    if (options?.role && user.role !== options.role) {
+      throw new Forbidden(`FORBIDDEN: vous devez disposer du role <${options.role}>. Vous etes actuellement <${user.role}>`);
     }
     
   }

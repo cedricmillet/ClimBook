@@ -1,0 +1,80 @@
+
+
+.level-circle.mat-list-icon,
+.level-circle {
+    background: #F5F5F5;
+    height: 1.5em;
+    line-height: 1.5em;
+    width: 1.5em;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 50%;
+    border-width: 4px;
+    border-style: solid;
+    border-color: grey;
+    vertical-align: middle;
+}
+
+.level-circle.violet {  border-color: var(--bloc-violet); }
+.level-circle.noir {  border-color: var(--bloc-noir); }
+.level-circle.rouge {  border-color: var(--bloc-rouge); }
+.level-circle.bleu {  border-color: var(--bloc-bleu); }
+.level-circle.vert {  border-color: var(--bloc-vert); }
+
+.block-list .block {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    margin-bottom: .5em;
+}
+
+
+.graph-wrapper {
+    width: 4em;
+}
+
+/* 5 barres */
+.graph-niveau {
+    position: relative;
+    width: 48px;
+    height: 48px;
+
+    --margin-beetwen-bars: 2px;
+    --bar-width: 7px;
+}
+
+
+.graph-niveau .bar {
+    position: absolute;
+    bottom: 0;
+    width: var(--bar-width);
+    
+    min-height: 1em;
+    background: #F5F5F5
+}
+
+.graph-niveau .bar:nth-of-type(1) {
+    background: blue; 
+    top: 80%;
+    left: var(--bar-width);
+}
+.graph-niveau .bar:nth-of-type(2) {
+    background: red; 
+    top: 60%;
+    left: calc(1 * (var(--bar-width) + var(--margin-beetwen-bars)) + var(--bar-width));
+}
+.graph-niveau .bar:nth-of-type(3) {
+    background: purple; 
+    top: 40%;
+    left: calc(2 * (var(--bar-width) + var(--margin-beetwen-bars))  + var(--bar-width));
+}
+.graph-niveau .bar:nth-of-type(4) {
+    background: pink; 
+    top: 20%;
+    left: calc(3 * (var(--bar-width) + var(--margin-beetwen-bars))  + var(--bar-width));
+}
+.graph-niveau .bar:nth-of-type(5) {
+    background: orange; 
+    top: 0;
+    left: calc(4 * (var(--bar-width) + var(--margin-beetwen-bars))  + var(--bar-width));
+}

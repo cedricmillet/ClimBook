@@ -1,0 +1,69 @@
+
+
+<h1 mat-dialog-title class="center">Mon Espace</h1>
+<div mat-dialog-content>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Connexion">
+      <div class="subtabtitle"></div>
+      <form>
+        <mat-form-field class="full-width">
+          <mat-label>Pseudo / email</mat-label>
+          <input matInput placeholder="Votre pseudo ou email" value="admin" [(ngModel)]="login" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <input type="hidden" [value]="password">
+        
+        
+        <div class="fakecode">
+          {{ (' X ').repeat(password.length) }}
+          
+          <div id="clearcode" *ngIf="password.length>0" (click)="password=''">
+            <mat-icon>highlight_off</mat-icon>
+          </div>
+        </div>
+        
+        
+        <div id="keypad">
+          <div *ngFor="let i of shuffledNumbers"  class="key number" (click)="sendKey(i)">
+            {{i}}
+          </div>
+          
+          <div class="key action" [ngClass]="{'disabled': !canConnect()}" (click)="connect()">→</div>
+        </div>
+        
+        
+      </form>
+      
+    </mat-tab>
+    <mat-tab label="Inscription">
+      <div class="subtabtitle"></div>
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Votre adresse email" [(ngModel)]="reg.email" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Pseudo</mat-label>
+        <input matInput placeholder="Votre pseudo" [(ngModel)]="reg.pseudo" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="number" placeholder="Code à 6 chiffres" [(ngModel)]="reg.mdp" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <div class="center">
+        <button mat-fab color="primary">
+          <mat-icon>done_outline</mat-icon>
+        </button>
+      </div>
+      
+      
+    </mat-tab>
+  </mat-tab-group>
+  
+  
+  
+</div>
+
+<p class="center full-width">{{statusMessage}}</p>
+
+<div mat-dialog-actions>
+  
+</div>

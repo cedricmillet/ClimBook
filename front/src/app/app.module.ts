@@ -1,17 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+//  i18n - Langue française
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
+
 //  Angular Material
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSelectModule} from '@angular/material/select';
 //  Routing
 import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
-  { path: 'les-blocs', component: EcranBlocsComponent },
-  { path: 'classements', component: EcranClassementsComponent },
-  { path: 'progression', component: EcranProgressionComponent },
-  { path: '', component: EcranBlocsComponent },
-  { path: '*', component: MainComponent },
+  { path: 'les-blocs', component: EcranBlocsComponent, data: {pageName: "Les blocs"} },
+  { path: 'classements', component: EcranClassementsComponent, data: {pageName: "Classement general"} },
+  { path: 'progression', component: EcranProgressionComponent, data: {pageName: "Ma progression"} },
+  { path: '', component: EcranBlocsComponent, data: {pageName: "Les blocs"} },
+  { path: '*', component: EcranBlocsComponent, data: {pageName: "Les blocs"} },
 
 ];
 //  App components
@@ -22,6 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EcranProgressionComponent } from './main/ecran-progression/ecran-progression.component';
 import { EcranClassementsComponent } from './main/ecran-classements/ecran-classements.component';
 import { EcranBlocsComponent } from './main/ecran-blocs/ecran-blocs.component';
+import { HeaderMenuComponent } from './header-menu/header-menu.component';
+import { DialogLoginComponent } from './header-menu/dialog-login/dialog-login.component';
 
 @NgModule({
   declarations: [
@@ -30,19 +47,26 @@ import { EcranBlocsComponent } from './main/ecran-blocs/ecran-blocs.component';
     MainComponent,
     EcranProgressionComponent,
     EcranClassementsComponent,
-    EcranBlocsComponent
+    EcranBlocsComponent,
+    HeaderMenuComponent,
+    DialogLoginComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, FormsModule,
     //  Routing
     RouterModule.forRoot(routes),
+    //  HTTP client
+    HttpClientModule,
     //  Angular Material Animations
     BrowserAnimationsModule,
     //  Angular Material Components
-    MatButtonModule, MatListModule, MatIconModule
+    MatButtonModule, MatListModule, MatIconModule, MatDialogModule, MatInputModule, MatTabsModule, 
+    MatCardModule, MatExpansionModule, MatSelectModule
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [
+    {provide: LOCALE_ID, useValue: "fr-CA" }  /** dates en francais */
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

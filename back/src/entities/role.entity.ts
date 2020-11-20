@@ -21,6 +21,7 @@ export class Role implements Entity {
   getId = () => this.data['id'];
   get = (field: RoleFields) => this.data[field];
   set = (field: RoleFields, value: any) => this.data[field] = value;
+  getData = () => this.data;
   
   /** ----------------------| methodes spécifiques            */
   

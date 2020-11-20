@@ -1,0 +1,83 @@
+[type="password"] {
+    text-align: center;
+}
+
+#keypad {
+    /** numbers */
+    margin-left: 50%;
+    transform: translateX(-50%);
+
+
+    --wdth: 13em;
+    --spacing: 10px;
+    --carre: calc((var(--wdth) - 6 * var(--spacing)) / 3);
+    width: var(--wdth);
+}
+
+#keypad .key {
+    float: left;
+    background: var(--main-color);
+    color: #fff;
+    text-align: center;
+    margin: var(--spacing);
+    height: var(--carre);
+    line-height: var(--carre);
+}
+
+#keypad .key.number {
+    width: var(--carre);   
+}
+
+#keypad .key:hover {
+    cursor: pointer;
+}
+#keypad .key.number:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+#keypad .key.action {
+    width: calc(2 * var(--carre) + 2 * var(--spacing));
+    background: var(--second-color)
+}
+
+.key.action.valid {
+    opacity: .5;
+}
+
+.key.disabled {
+    opacity: .4;
+}
+
+#keypad:after {
+    display: block;
+    content: '';
+    clear:both
+}
+
+.fakecode {
+    width: 100%;
+    background-color: rgba(0, 0, 0, .06);
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    margin-bottom: .5em;
+    position: relative;
+
+    -webkit-box-shadow: inset 0px 0px 4px 0px rgba(189,185,189,1);
+    -moz-box-shadow: inset 0px 0px 4px 0px rgba(189,185,189,1);
+    box-shadow: inset 0px 0px 4px 0px rgba(189,185,189,1);
+}
+
+#clearcode {
+    margin-top: .25em;
+    margin-right: .25em;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.subtabtitle {
+    margin-bottom: 1em;
+}

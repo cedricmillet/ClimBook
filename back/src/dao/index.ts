@@ -58,13 +58,15 @@ export abstract class DAO<E extends Entity> {
   /**
    * Retourne une entité par son id
    */
-  public async getById(id:number): Promise<E> {
+  public async getById(id:number, returnsEntity:boolean=true): Promise<E> {
     try {
       const query: string = `SELECT * FROM ${this.getTableName()} WHERE id=$1`;
       const values = [id];
       const pool = DBManager.getPool();
       const result = await pool.query(query, values);
-      return <E>this.resultSet2Entities(result.rows[0]);
+      if (returnsEntity)
+        return <E>this.resultSet2Entities(result.rows[0]);
+      else return result.rows[0];
     } catch (err) {
       throw new Error("AbstractDAO error = "+err);
     }
@@ -73,12 +75,14 @@ export abstract class DAO<E extends Entity> {
   /**
    * Retourne toutes les entités de la table
    */
-  public async getAll(): Promise<E[]> {
+  public async getAll(returnsEntity:boolean=true): Promise<E[]> {
     try {
       const q: string = `SELECT * FROM ${this.getTableName()}`;
       const pool = DBManager.getPool();
       const result = await pool.query(q);
-      return <E[]>this.resultSet2Entities(result.rows);
+      if (returnsEntity)
+        return <E[]>this.resultSet2Entities(result.rows);
+      else return result.rows;
     } catch (err) {
       throw new Error("AbstractDAO error = "+err);
     }

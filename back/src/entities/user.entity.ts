@@ -26,6 +26,7 @@ export class User implements Entity {
   getId = () => this.data['id'];
   get = (field: UserFields) => this.data[field];
   set = (field: UserFields, value: any) => this.data[field] = value;
+  getData = () => this.data;
   
   /** ----------------------| methodes spécifiques            */
   

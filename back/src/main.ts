@@ -1,24 +1,30 @@
 
-import * as express from 'express';          //  https://www.npmjs.com/package/express
 import * as chalk from 'chalk';         //  https://www.npmjs.com/package/chalk
-
-
-
 import {$log as log, Logger} from "@tsed/common";
 import {PlatformExpress} from "@tsed/platform-express";
 import { Server } from "./server";
 import { DBManager } from './dao';
-import { DAO_Utilisateur } from './dao/utilisateurs.dao';
-import { User, UserBuilder, UserFields } from './entities/user.entity';
 
 
+(async () => {
+  log.info('Lancement du backend....');
+
+  /** Attente du lancement du container postgres */
+  let dbConnected: boolean = false;
+  while(!dbConnected)  await db_force_connect_loop();  
+
+  /** Lancement de l'API */
+  init_framework();
+})();
+
+
+/**
+ * Lancer le framework (routes, controllers, protols, guars, middlewares)
+ */
 async function init_framework() {
   try {
     log.debug("Start server...");
-    const platform = await PlatformExpress.bootstrap(Server, {
-      // extra settings
-    });
-    
+    const platform = await PlatformExpress.bootstrap(Server, {});
     await platform.listen();
     log.debug("Server initialized");
   } catch (er) {
@@ -26,28 +32,19 @@ async function init_framework() {
   }
 }
 
-(async () => {
-  console.log('Lancement du backend....');
-  await DBManager.connect();
-/*
-  const build: User = new UserBuilder().setRoleId(1).setPseudo('jean jean').setMdp('1234').setEmail('gmail.com').build();
-  //console.log("depuis le builder: ", user)
-  const insert = await new DAO_Utilisateur().insert(build);
-  //console.log(insert);
-  console.log("Inséré = ", insert)
-  
-  insert.set(UserFields.roleId, 3)
-  const update = await new DAO_Utilisateur().update(insert);
-  //console.log("updateStatus = ", update)
-
-  const usr = await new DAO_Utilisateur().getById(insert.getId());
-  console.log(">>>> apres update = ", usr)
-  */
-  
-
-  init_framework();
-})();
-
-
-//const apiPort = process.env.API_PORT || 8080;
-//console.log('VAr = ', apiPort);
+/**
+ * Lorsque la DB n'est pas encore prête, on boucle la tentative de connexion
+ */
+function db_force_connect_loop() : Promise<boolean> {
+  return new Promise(async (res) => {
+    try {
+      await DBManager.connect();
+      res(true);
+    } catch (error) {
+      const retryDelayMs: number = 5000;
+      log.error(chalk.redBright("Erreur connexion DB : ", error));
+      log.error(chalk.yellow.inverse(`Nouvelle tentative de connexion dans ${retryDelayMs/1000} s`))
+      setTimeout(() => { res(false) }, retryDelayMs)
+    }
+  });
+}

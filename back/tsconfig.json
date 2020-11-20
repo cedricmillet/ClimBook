@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
       "baseUrl": ".",
-      "outDir": "./build",
+      "outDir": "./build/src",
       "target": "es2018",
       "lib": [
         "es7",
@@ -23,9 +23,6 @@
       "./src/**/*.ts"
     ],
     "exclude": [
-      "node_modules",
-      "./public",
-      "build",
-      "test"
+      "node_modules"
     ]
   }
