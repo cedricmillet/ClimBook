@@ -40,7 +40,7 @@ services:
       driver: none 
   # Backend
   backend:
-    image: backend:latest
+    image: thecyrion/bdd_cnam:back-0.1
     build: ./back/
     environment:
       - API_PORT=7777
@@ -58,12 +58,14 @@ services:
       - db
   # FrontEnd
   frontend:
-    image: frontend:latest
-    build: ./front/
+    image: thecyrion/bdd_cnam:front-0.1
+    build:
+      context: ./front/
     ports:
       - 4321:80
 
-
+# pour lancer à partir des images
+# pour build à partir des sources : docker-compose build --force-rm
 
 # PUSH
 # docker tag frontend thecyrion/bdd_cnam:front-0.1 && docker push thecyrion/bdd_cnam:front-0.1
