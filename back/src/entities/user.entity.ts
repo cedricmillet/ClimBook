@@ -1,9 +1,11 @@
-import { string } from '@tsed/schema';
-import { Entity } from './index';
+import { Entity, EntityBuilder, IEntity } from './index';
 import { DAO_Utilisateur } from '../dao/utilisateurs.dao';
 import { Role } from './role.entity';
 import { DAO_Role } from '../dao/roles.dao';
 
+/**
+ * Propriétés de l'entité
+ */
 export enum UserFields {
   id = 'id',
   roleId = 'roleId',
@@ -15,11 +17,13 @@ export enum UserFields {
 /**
 * Classe entité
 */
-export class User implements Entity {
+export class User extends Entity implements IEntity {
   
   /** ----------------------| propriétés de l'entité          */
   //protected id: number;
   protected data = {};
+  public fields = UserFields;
+
   private role: Role;
   
   /** ----------------------| getters / setters publics         */
@@ -41,7 +45,25 @@ export class User implements Entity {
   
 }
 
+/**
+ * Builder
+ */
+export class UserBuilder extends User implements EntityBuilder<User>  {
+  constructor() {
+    super();
+  }
 
+  public fromDataSet(dataset: any) : User {
+    const e = new User();
+    for (let key in dataset) {
+      if (this.fields[key]) e.set(this.fields[key], dataset[key]);
+    }
+    return e;
+  }
+}
+
+
+/*
 export class UserBuilder extends User {
   private builderData : {field:string, value:any}[] = [];
 
@@ -49,14 +71,12 @@ export class UserBuilder extends User {
     super();
   }
 
-  /** !!! build !!! */
   public build() : User {
     const user = new User();
     this.builderData.forEach(prop => user.set(UserFields[prop.field], prop.value));
     return user;
   }
 
-  /** propriétés de l'entité */
   public setId(id: number) {
     this.builderData.push({
       field: UserFields.id,
@@ -92,9 +112,10 @@ export class UserBuilder extends User {
     });
     return this;
   }
-  
-  
 }
+*/
+
+
 
 /**
 * Classe utilitaire

@@ -8,15 +8,15 @@
       <form>
         <mat-form-field class="full-width">
           <mat-label>Pseudo / email</mat-label>
-          <input matInput placeholder="Votre pseudo ou email" value="admin" [(ngModel)]="login" [ngModelOptions]="{standalone: true}">
+          <input matInput placeholder="Votre pseudo ou email" value="admin" [(ngModel)]="log.user" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
-        <input type="hidden" [value]="password">
+        <input type="hidden" [value]="log.pass">
         
         
         <div class="fakecode">
-          {{ (' X ').repeat(password.length) }}
+          {{ (' X ').repeat(log.pass.length) }}
           
-          <div id="clearcode" *ngIf="password.length>0" (click)="password=''">
+          <div id="clearcode" *ngIf="log.pass.length>0" (click)="log.pass=''">
             <mat-icon>highlight_off</mat-icon>
           </div>
         </div>

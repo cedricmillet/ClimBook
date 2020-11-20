@@ -11,10 +11,10 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>-->
-              
+            <mat-progress-bar *ngIf="!voies" mode="indeterminate"></mat-progress-bar>
             <mat-list role="list" class="block-list">
                 <mat-list-item role="listitem" class="block" *ngFor="let bloc of (voies)">
-                    <span class="level-circle" mat-list-icon>7A</span>
+                    <span class="level-circle violet" mat-list-icon>7A</span>
                     <div mat-line>{{bloc?.nom}}</div>
                     <div mat-line>{{bloc?.datev | date:'d MMMM y'}}</div>
                 </mat-list-item>

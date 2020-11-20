@@ -5,23 +5,14 @@ import { DAO, DBManager } from './index';
 export class DAO_Role extends DAO<Role> {
   
   constructor() {
-    super("INSERT INTO roles(id, role) VALUES ($1,$2)",
-          "UPDATE roles SET role=$1 WHERE id=$2");
+    super(new Role(), "roles");
   }
 
   /**
-   * Retourne le nom de la table SQL
+   * Retourne toutes les colonnes de l'entitée données à l'exeption de son ID
    */
-  public getTableName = (): string => "roles";
-
-  /**
-   * Retourne toutes les propriétés de l'entitée données à l'exeption de son ID
-   */
-  protected getEntityValues(role: Role) {
-    return [
-      role.get(RoleFields.id),
-      role.get(RoleFields.role),
-    ];
+  public getEntityValues(e: Role) {
+    return Object.keys(e.fields).filter(i=>i!='id').map((field) => e.get(e.fields[field]));
   }
 
   /**
@@ -29,10 +20,7 @@ export class DAO_Role extends DAO<Role> {
    * @param resultSet jeu de réponse SQL
    */
   protected fromResultSet(resultSet: any): Role {
-    const role : Role = new RoleBuilder()
-      .setId(resultSet['id'])
-      .setRole(resultSet['role'])
-      .build();
+    const role: Role = new RoleBuilder().fromDataSet(resultSet);
     return role;
   }
 

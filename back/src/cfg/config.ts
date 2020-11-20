@@ -4,7 +4,7 @@ export const config = {
     API_PORT: 8080,
     DB: {
         HOST: "localhost",
-        PORT: "5432",
+        PORT: "6321",
         USER: "root",
         PASS: "1234",
         DATABASE: "climbook"

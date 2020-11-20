@@ -1,6 +1,9 @@
-import { Entity } from './index';
+import { Entity, EntityBuilder, IEntity } from './index';
 import { DAO_Voie } from '../dao/voies.dao';
 
+/**
+ * Propriétés de l'entité
+ */
 export enum VoieFields {
   id = 'id',
   id_niveau = 'id_niveau',
@@ -11,12 +14,12 @@ export enum VoieFields {
 /**
 * Classe entité
 */
-export class Voie implements Entity {
+export class Voie extends Entity implements IEntity {
   
   /** ----------------------| propriétés de l'entité          */
   //protected id: number;
   protected data = {};
-  protected enumFields = VoieFields;
+  public fields = VoieFields;
   
   /** ----------------------| getters / setters publics         */
   getId = () => this.data['id'];
@@ -27,18 +30,38 @@ export class Voie implements Entity {
   /** ----------------------| methodes spécifiques            */
   
   public getIdNiveau(): number {
-    return this.data[this.enumFields.id_niveau];
+    return this.data[this.fields.id_niveau];
   }
   public getDate(): string {
-    return this.data[this.enumFields.datev];
+    return this.data[this.fields.datev];
   }
   public getNom(): string {
-    return this.data[this.enumFields.nom];
+    return this.data[this.fields.nom];
   }
   
 }
 
 
+
+/**
+ * Builder
+ */
+export class VoieBuilder extends Voie implements EntityBuilder<Voie>  {
+  constructor() {
+    super();
+  }
+
+  public fromDataSet(dataset: any) : Voie {
+    const e = new Voie();
+    for (let key in dataset) {
+      if (this.fields[key]) e.set(this.fields[key], dataset[key]);
+    }
+    return e;
+  }
+}
+
+
+/*
 export class VoieBuilder extends Voie {
   private builderData : {field:string, value:any}[] = [];
   
@@ -46,14 +69,12 @@ export class VoieBuilder extends Voie {
     super();
   }
 
-  /** !!! build !!! */
   public build() : Voie {
     const user = new Voie();
     this.builderData.forEach(prop => user.set(this.enumFields[prop.field], prop.value));
     return user;
   }
 
-  /** propriétés de l'entité */
   public setId(id: number) {
     this.builderData.push({
       field: this.enumFields.id,
@@ -83,4 +104,4 @@ export class VoieBuilder extends Voie {
     return this;
   }
   
-}
+}*/

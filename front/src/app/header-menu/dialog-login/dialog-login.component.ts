@@ -8,14 +8,18 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DialogLoginComponent implements OnInit {
   public statusMessage: string = "";
   public shuffledNumbers: number[] = [];
-  @Input() password: string = "";
-  @Input() login: string = "";
+
   public MAX_CODE_LENGTH = 6;
 
   @Input() reg = {
     pseudo: '',
     mdp: '',
     email: ''
+  }
+
+  @Input() log = {
+    user: 'admin',
+    pass: '000000'
   }
 
   constructor() {
@@ -29,14 +33,14 @@ export class DialogLoginComponent implements OnInit {
   }
 
   sendKey(k) {
-    if (this.password.length >= this.MAX_CODE_LENGTH) return;
-    this.password += k;
+    if (this.log.pass.length >= this.MAX_CODE_LENGTH) return;
+    this.log.pass += k;
   }
 
 
   canConnect() {
-    if (this.login.length < 3) return false;
-    if (this.password.length < this.MAX_CODE_LENGTH) return false;
+    if (this.log.user.length < 3) return false;
+    if (this.log.pass.length < this.MAX_CODE_LENGTH) return false;
     return true;
   }
 

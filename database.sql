@@ -109,6 +109,9 @@ CREATE TABLE chronos (
             ON DELETE SET NULL
 );
 
+/*-----------------------------------------
+                POPULATE DES TABLES
+-----------------------------------------*/
 --
 -- AJOUT DES ROLES
 --
@@ -117,8 +120,8 @@ INSERT INTO roles (id, role) VALUES(2, 'client');
 
 -- AJOUT DES UTILISATEURS
 --
-INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(1, 1, 'admin', crypt('admin', gen_salt('bf')), 'admin@domain.com',true);
-INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(2, 2, 'client', crypt('client', gen_salt('bf')), 'client@domain.com',false);
+INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(1, 1, 'admin', crypt('000000', gen_salt('bf')), 'admin@domain.com',true);
+INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(2, 2, 'client', crypt('123456', gen_salt('bf')), 'client@domain.com',false);
 
 -- AJOUT DES NIVEAUX
 --
@@ -140,7 +143,7 @@ INSERT INTO voies (id,id_niveau,nom) VALUES(3,2,'Un nouvel espoir');
 --
 INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(1,2,1,'32:12.32');
 INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(2,2,2,'39:12.48');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(2,2,3,'39:12.25');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(3,2,3,'39:12.25');
 
 
 --
@@ -210,28 +213,10 @@ SELECT * FROM getBestGrimp(1) AS (id_u INTEGER, pseudo_u VARCHAR);*/
                 TRIGGERS
 -----------------------------------------*/
 
+DROP TRIGGER IF EXISTS supp_utilisateur ON utilisateurs;
+
+
 -- Avant de supprimer un utilisateur, on supprime ses statistiques (ascencions et validationsChrono)
-
-CREATE OR REPLACE FUNCTION supp_utilisateur()
-    RETURNS TRIGGER AS
-    $$
-    BEGIN
-        DELETE FROM ascensions WHERE ascensions.id_utilisateur = OLD.id;
-        DELETE FROM chronos WHERE chronos.id_utilisateur =  OLD.id;
-        RETURN OLD;
-    END;
-    $$
-    LANGUAGE PLPGSQL;
-
-
-CREATE TRIGGER supp_utilisateur
-    BEFORE DELETE
-    ON utilisateurs 
-    FOR EACH ROW
-EXECUTE PROCEDURE supp_utilisateur();
-
---Faire en sorte que si on supprime un utilisateur 
---on supprime les champs dans chronos et ascensions associé à l'id de l'utilisateur.
 
 CREATE OR REPLACE FUNCTION supp_utilisateur()
     RETURNS TRIGGER AS
