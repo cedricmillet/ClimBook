@@ -19,8 +19,9 @@ CREATE EXTENSION pgcrypto;
 --
 CREATE TABLE niveaux (
     id SERIAL PRIMARY KEY,
-	difficulte INT,
-    nom VARCHAR(50) NOT NULL
+	difficulte INT, /* permet d'attribuer un score correspondant à un niveau */
+    nom VARCHAR(50) NOT NULL,
+    couleur VARCHAR(15) NOT NULL
 );
 
 --
@@ -117,14 +118,19 @@ INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(2, 2, 
 --
 -- AJOUT DES NIVEAUX
 --
-INSERT INTO niveaux (id,difficulte,nom) VALUES(1,3,'kilimanjaro');
-INSERT INTO niveaux (id,difficulte,nom) VALUES(2,8,'collinepentu');
+INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(1,3,'3A','blanc');
+INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(2,4,'4A','vert');
+INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(3,8,'5A','bleu');
+INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(4,15,'6B','rouge');
+INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(5,18,'7B','noir');
+INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(6,25,'8A','violet');
 
 --
 -- AJOUT DES VOIES
 --
-INSERT INTO voies (id,id_niveau,nom) VALUES(1,2,'3C');
-INSERT INTO voies (id,id_niveau,nom) VALUES(2,1,'5B');
+INSERT INTO voies (id,id_niveau,nom) VALUES(1,6,'The Crux');
+INSERT INTO voies (id,id_niveau,nom) VALUES(2,5,'The big Wall');
+INSERT INTO voies (id,id_niveau,nom) VALUES(3,2,'Un nouvel espoir');
 
 
 --
