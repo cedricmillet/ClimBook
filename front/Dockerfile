@@ -19,7 +19,8 @@ FROM mhart/alpine-node:12 as build
 # set working directory
 WORKDIR /front
 
-RUN apt-get update
+#RUN apt-get update
+RUN apk update
 
 # add `/backend/node_modules/.bin` to $PATH
 # ENV PATH /front/node_modules/.bin:$PATH
@@ -37,18 +38,20 @@ COPY . /front
 #RUN ng e2e --port 4202
 
 # generate build
-RUN ng build --output-path=dist
+RUN ng build --output-path=dist && ls
 
 ############
 ### prod ###
 ############
-WORKDIR /front
+#WORKDIR /front
 
 # base image
 FROM nginx:1.16.0-alpine
 
 # COPÏE du build dans le container
-COPY dist/front/ /usr/share/nginx/html
+# COPY dist/front/ /usr/share/nginx/html
+RUN ls
+COPY --from=build /front/dist/ /usr/share/nginx/html
 
 # Exposer le port 80
 EXPOSE 80
