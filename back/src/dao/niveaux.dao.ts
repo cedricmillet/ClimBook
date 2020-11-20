@@ -1,5 +1,4 @@
 import { DAO, DBManager } from './index';
-import { Voie, VoieBuilder, VoieFields } from '../entities/voie.entity';
 import { Niveau, NiveauBuilder } from '../entities/niveau.entity';
 
 
