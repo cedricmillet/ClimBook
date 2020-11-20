@@ -12,7 +12,7 @@ services:
     image: postgres:12
     restart: always
     ports:
-      - 5432:5432
+      - 6321:5432
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=1234
@@ -29,7 +29,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
       - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
-      - 5050:80
+      - 6322:80
     volumes:
       - ./data_pgadmin:/var/lib/pgadmin
     networks:
@@ -51,7 +51,7 @@ services:
       - API_DB_PASS=1234
       - API_DB_DATABASE=climbook
     ports:
-      - 8080:7777
+      - 6323:7777
     networks:
       - backend_network
     depends_on:
@@ -62,7 +62,7 @@ services:
     build:
       context: ./front/
     ports:
-      - 4321:80
+      - 6324:80
 
 # pour lancer à partir des images
 # pour build à partir des sources : docker-compose build --force-rm

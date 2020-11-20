@@ -20,7 +20,7 @@ docker-compose pull
 docker-compose up
 ```
 
-**Une fois lancé, l'API est accessible depuis `http://localhost:8080/api/v1/` et le front depuis `http://localhost:4321/`.**
+**Une fois lancé, l'API est accessible depuis `http://localhost:6323/api/v1/` et le front depuis `http://localhost:6324/`.**
 
 ### Solution 2 - Générer vos images à partir des sources
 /!\ 2 containers intermédiaires (builders) seront générés, pour un total de 1.5Gb
@@ -37,7 +37,7 @@ docker-compose up
 // !! Penser à supprimer les containers intermédiaires useless !!
 ```
 
-**Une fois lancé, l'API est accessible depuis `http://localhost:8080/api/v1/` et le front depuis `http://localhost:4321/`.**
+**Une fois lancé, l'API est accessible depuis `http://localhost:6323/api/v1/` et le front depuis `http://localhost:6324/`.**
 
 ## Frontend
 Angular 10.0.4
