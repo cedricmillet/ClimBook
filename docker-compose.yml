@@ -45,6 +45,11 @@ services:
     environment:
       - API_PORT=7777
       - API_PREFIX=/api/v2/
+      - API_DB_HOST=db
+      - API_DB_PORT=5432
+      - API_DB_USER=root
+      - API_DB_PASS=1234
+      - API_DB_DATABASE=climbook
     ports:
       - 8080:7777
     networks:
