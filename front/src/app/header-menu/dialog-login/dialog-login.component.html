@@ -2,7 +2,7 @@
 
 <h1 mat-dialog-title class="center">Mon Espace</h1>
 <div mat-dialog-content>
-  <mat-tab-group mat-align-tabs="start">
+  <mat-tab-group mat-align-tabs="start" *ngIf="!authService.isLogged()">
     <mat-tab label="Connexion">
       <div class="subtabtitle"></div>
       <form>
@@ -58,7 +58,14 @@
     </mat-tab>
   </mat-tab-group>
   
-  
+  <div *ngIf="authService.isLogged()">
+    <mat-list role="list">
+      <mat-list-item role="listitem"><b>Role: </b> {{authService.getRole()}}</mat-list-item>
+      <mat-list-item role="listitem"><b>UID: </b> {{authService.getSession().id}}</mat-list-item>
+    </mat-list>
+
+    <button mat-raised-button color="accent" class="full-width" (click)="authService.clearSession()">Me déconnecter</button>
+  </div>
   
 </div>
 

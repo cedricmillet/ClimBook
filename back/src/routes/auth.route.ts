@@ -38,9 +38,11 @@ export class AuthController {
       if (!(usr instanceof User)) throw new Error(`introuvable en bdd ${login}/${pass} : usr=${usr}`);
       console.log(chalk.inverse.green(">>> LOGIN/PASS VALIDE POUR L'UTILISATEUR : " + login))
       /** Mise a jour de la session coté serveur */
+      const r = await usr.getRole();
+      //console.log("role = ", r, usr)
       user.id = usr.getId();
-      user.role = (await usr.getRole()).getRoleName();
-      return JSON.stringify({ success:true, user: usr });
+      user.role = r.getRoleName();
+      return JSON.stringify({ success:true, user: usr.getData(), role: user.role });
     } catch (error) {
       throw new NotFound("Unknown User : " + error);
     }    

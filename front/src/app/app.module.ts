@@ -20,7 +20,8 @@ import { MatCardModule } from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 //  Routing
 import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
@@ -64,7 +65,7 @@ import { DialogLoginComponent } from './header-menu/dialog-login/dialog-login.co
     //  Angular Material Components
     MatButtonModule, MatListModule, MatIconModule, MatDialogModule, MatInputModule, MatTabsModule, 
     MatCardModule, MatExpansionModule, MatSelectModule, MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule, MatSnackBarModule
   ],
   exports: [RouterModule],
   providers: [

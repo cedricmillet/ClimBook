@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-dialog-login',
@@ -22,7 +25,14 @@ export class DialogLoginComponent implements OnInit {
     pass: '000000'
   }
 
-  constructor() {
+  @Output()
+  onClose: EventEmitter<boolean> = new EventEmitter();
+  
+  constructor(public authService: AuthService) {
+    this.shuffleKeypad()
+  }
+
+  shuffleKeypad() {
     this.shuffledNumbers = [1,2,3,4,5,6,7,8,9,0]
     .map((a) => ({sort: Math.random(), value: a}))
     .sort((a, b) => a.sort - b.sort)
@@ -44,8 +54,26 @@ export class DialogLoginComponent implements OnInit {
     return true;
   }
 
-  connect() {
+  async connect() {
     this.statusMessage = "Connexion...";
+    const data = await this.authService.request_login(this.log.user, this.log.pass);
+    if (data) {
+      this.statusMessage = "Connexion réussie.";
+      this.closeModal();
+    } else {
+      this.statusMessage = "Echec connexion.";
+      this.log.pass = '';
+      this.shuffleKeypad()
+    }
+  }
+
+
+  closeModal() {
+    this.onClose.emit(true);
+  }
+
+  register() {
+
   }
 
 }

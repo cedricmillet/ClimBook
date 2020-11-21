@@ -22,6 +22,7 @@ export class EcranBlocsComponent implements OnInit {
 
   async refreshBlockList() {
     this.voies = await this.blocService.getAll();
+    console.log(">> ", this.voies)
   }
 
 

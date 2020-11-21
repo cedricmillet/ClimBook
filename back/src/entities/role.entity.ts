@@ -31,7 +31,7 @@ export class Role extends Entity implements IEntity {
   * Retourne le role de l'utilisateur
   */
   public getRoleName(): string {
-    return this.data[RoleFields.role];
+    return this.data[this.fields.role];
   }
   
 }

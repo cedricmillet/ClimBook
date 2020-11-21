@@ -8,10 +8,11 @@ import { DAO_Role } from '../dao/roles.dao';
  */
 export enum UserFields {
   id = 'id',
-  roleId = 'roleId',
+  id_role = 'id_role',
   pseudo = 'pseudo',
   mdp = 'mdp',
   email = 'email',
+  isabonne = 'isabonne',
 };
 
 /**
@@ -38,8 +39,9 @@ export class User extends Entity implements IEntity {
   * Retourne le role de l'utilisateur
   */
   public async getRole(): Promise<Role> {
-    const roleId: number = this.get(UserFields.roleId);
+    const roleId: number = this.get(this.fields.id_role);
     const role: Role = await new DAO_Role().getById(roleId);
+    //console.log("role = ", role, "roleid = ", roleId, "field = ", this.fields.roleId)
     return role;
   }
   

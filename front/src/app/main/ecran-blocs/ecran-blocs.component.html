@@ -11,7 +11,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>-->
-            <mat-progress-bar *ngIf="!voies" mode="indeterminate"></mat-progress-bar>
+            <mat-progress-bar *ngIf="!voies" mode="indeterminate" class="mt-2"></mat-progress-bar>
             <mat-list role="list" class="block-list">
                 <mat-list-item role="listitem" class="block" *ngFor="let bloc of (voies)">
                     <span class="level-circle violet" mat-list-icon>7A</span>
