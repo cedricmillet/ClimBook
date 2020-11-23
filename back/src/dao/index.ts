@@ -65,7 +65,7 @@ export abstract class DAO<E extends Entity> {
   /**
    * Retourne toutes les lignes de la table
    */
-  public async getAll(returnsEntity:boolean=true): Promise<E[]> {
+  public async getAll(returnsEntity:boolean=true): Promise<E[]|any> {
     try {
       const q: string = `SELECT * FROM ${this.getTableName()}`;
       const pool = DBManager.getPool();

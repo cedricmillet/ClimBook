@@ -13,6 +13,7 @@ export class EcranBlocsComponent implements OnInit {
   ];
 
   public voies;
+  selectedBlock = null;
 
   constructor(private blocService: VoieService) { }
 
