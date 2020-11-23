@@ -18,13 +18,14 @@ export class Voie extends Entity implements IEntity {
   
   /** ----------------------| propriétés de l'entité          */
   //protected id: number;
-  protected data = {};
   public fields = VoieFields;
   
   /** ----------------------| getters / setters publics         */
   getId = () => this.data['id'];
   get = (field: VoieFields) => this.data[field];
-  set = (field: VoieFields, value: any) => this.data[field] = value;
+  set(field: VoieFields, value: any) {
+    this.data[field] = value;
+  }
   getData = () => this.data;
   
   /** ----------------------| methodes spécifiques            */

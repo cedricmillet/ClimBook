@@ -1,9 +1,13 @@
 import {Controller, Get, Post, UseAuth, Status, Session, BodyParams,Required} from "@tsed/common";
 import {AuthCheck} from "../guards/login.guard";
-import { User , Users} from "../entities/user.entity";
+import { User, Users, UserBuilder } from '../entities/user.entity';
 import * as session from 'express-session';
-import { NotFound } from "@tsed/exceptions";
+import { Conflict, NotFound } from "@tsed/exceptions";
 import * as chalk from "chalk";
+import { DAO_Utilisateur } from '../dao/utilisateurs.dao';
+import { DAO_Role } from '../dao/roles.dao';
+import { Roles } from "../entities/role.entity";
+import { DBManager } from "src/dao";
 
 // https://tsed.io/tutorials/session.html
 
@@ -45,6 +49,39 @@ export class AuthController {
       return JSON.stringify({ success:true, user: usr.getData(), role: user.role });
     } catch (error) {
       throw new NotFound("Unknown User : " + error);
+    }    
+  }
+
+
+  @Post("/register")
+  @Status(200, Boolean).Description("Success")
+  async register(@Required() @BodyParams("pseudo") pseudo: string,
+    @Required() @BodyParams("email") email: string,
+    @Required() @BodyParams("mdp") mdp: string,
+    @Required() @BodyParams("isabonne") isabonne: string,
+    @Session("user") user: any) {
+    console.log(`>>> Creation compte (${pseudo}, ${email}, ${mdp}, ${isabonne})`);
+    try {
+      const userDAO = new DAO_Utilisateur();
+
+      const emailAlreadyTaken: boolean = (await userDAO.getByFieldValuePair('email', email) instanceof User);
+      const pseudoAlreadyTaken: boolean = (await userDAO.getByFieldValuePair('pseudo', pseudo) instanceof User);
+      if (emailAlreadyTaken) throw new Conflict(`Adresse email ${email} est indisponible`);
+      if (pseudoAlreadyTaken) throw new Conflict(`Le pseudo ${pseudo} est indisponible`);
+
+      const register = await userDAO.register({
+        email: email,
+        pseudo: pseudo,
+        mdp: mdp,
+        isabonne: isabonne
+      })
+      //console.log(insert)
+      console.log("register = ", register)
+
+      return true;
+      
+    } catch (error) {
+      throw new NotFound("Erreur creation compte utilisateur : " + error);
     }    
   }
 

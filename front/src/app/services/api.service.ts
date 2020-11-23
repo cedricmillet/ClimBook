@@ -31,7 +31,7 @@ export class ApiService {
         },
         error => {
           console.log("api.service : erreur requete : ", error)
-          this.snackMsg("Erreur - HTTP GET - réponse API : " + error.status, 6000)
+          //this.snackMsg("Erreur - HTTP GET - réponse API : " + error.status, 6000)
           rej(error)
         }
         );
@@ -41,12 +41,13 @@ export class ApiService {
   http_post(url, data) {
     return new Promise(async (res, rej) => {
       const r = await this.http.post(url, data).subscribe(
-        data => {
-          res(data)
+        (data: any) => {
+          if (!data) rej(data);
+          else res(data);
         },
         error => {
           console.log("api.service : erreur requete : ", error)
-          this.snackMsg("Erreur - HTTP POST - réponse API : " + error.status, 6000)
+          //this.snackMsg("Erreur - HTTP POST - réponse API : " + error.status, 6000)
           rej(error)
         }
         );

@@ -86,6 +86,7 @@ export abstract class DAO<E extends Entity> {
     try {
       const query: string = `${this.persistQuery} RETURNING id`;
       const values = this.nextQueryValues;
+      console.log(`${query} / ${values}`)
       const pool = DBManager.getPool();
       const result = await pool.query(query, values);
       const insertId = result.rows[0].id;
@@ -140,6 +141,15 @@ export abstract class DAO<E extends Entity> {
     });
     
     return entityArray;
+  }
+
+
+  public async getByFieldValuePair(field:string, value:string) : Promise<Entity> {
+    const query: string = `SELECT * FROM ${this.getTableName()} WHERE ${field}=$1 LIMIT 1`;
+    const values = [value];
+    const pool = DBManager.getPool();
+    const result = await pool.query(query, values);
+    return result.rows.length==1 ? this.fromResultSet(result.rows[0]) : null;
   }
 
 

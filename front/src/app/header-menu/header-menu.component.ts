@@ -3,8 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationStart, Router, RoutesRecognized } from '@angular/router';
 import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DialogLoginComponent } from './dialog-login/dialog-login.component';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
+import { DialogLoginComponent } from './dialog-login/dialog-login.component';
+
 
 
 
@@ -19,7 +21,7 @@ export class HeaderMenuComponent implements OnInit {
   pageName: string;
   @ViewChild(DialogLoginComponent) dialogComponent;
 
-  constructor(public authService : AuthService, private router:Router, public dialog: MatDialog) {
+  constructor(public authService : AuthService, public userService : UserService, private router:Router, public dialog: MatDialog) {
     router.events.subscribe(event => {
       if (event instanceof RoutesRecognized) {
         let data = event.state.root.firstChild.data;

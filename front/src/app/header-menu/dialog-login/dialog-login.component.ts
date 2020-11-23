@@ -17,7 +17,8 @@ export class DialogLoginComponent implements OnInit {
   @Input() reg = {
     pseudo: '',
     mdp: '',
-    email: ''
+    email: '',
+    isabonne: false
   }
 
   @Input() log = {
@@ -72,8 +73,22 @@ export class DialogLoginComponent implements OnInit {
     this.onClose.emit(true);
   }
 
-  register() {
 
+  /** inscription  */
+  canRegister() {
+    if (!this.reg.email || !this.reg.mdp || !this.reg.pseudo) return false;
+    return true;
+  }
+  async register() {
+    if (!this.canRegister()) return;
+    this.statusMessage = "Creation du compte...";
+    const data = await this.authService.request_register(this.reg);
+    if (data) {
+      this.statusMessage = "Création effectuée.";
+      this.closeModal();
+    } else {
+      this.statusMessage = "Echec creation compte, veuillez réessayer";
+    }
   }
 
 }

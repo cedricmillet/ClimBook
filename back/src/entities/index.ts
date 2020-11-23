@@ -12,11 +12,17 @@ export interface IEntity {
  * Entité persistente en BDD
  */
 export abstract class Entity implements IEntity {
+  protected data = {};
   public abstract getId(): number;
   public abstract get(field: string) : any;
   public abstract set(field: string, value: any) : void;
   public abstract getData();
   public abstract fields;
+
+
+  public setCustom(customField: string, customData: any) {
+    this.data[customField] = customData;
+  }
 }
 
 /**

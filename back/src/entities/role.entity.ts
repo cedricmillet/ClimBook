@@ -1,3 +1,4 @@
+import { DAO_Role } from '../dao/roles.dao';
 import { Entity, IEntity, EntityBuilder } from './index';
 
 /**
@@ -15,7 +16,6 @@ export class Role extends Entity implements IEntity {
   
  
   /** ----------------------| propriétés de l'entité          */
-  protected data = {};
   public fields = RoleFields;
 
   
@@ -36,6 +36,12 @@ export class Role extends Entity implements IEntity {
   
 }
 
+export class Roles {
+  public static async getRoleByName(rolename:string) {
+    const targetRole : Role= (await new DAO_Role().getAll()).find((role) => role.get(role.fields.role) === rolename);
+    return targetRole;
+  }
+}
 
 /**
  * Builder

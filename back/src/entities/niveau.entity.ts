@@ -16,7 +16,7 @@ export enum NiveauFields {
 export class Niveau extends Entity implements IEntity {
  
   /** ----------------------| propriétés de l'entité          */
-  protected data = {};
+  
   public fields = NiveauFields;
 
   /** ----------------------| getters / setters publics         */

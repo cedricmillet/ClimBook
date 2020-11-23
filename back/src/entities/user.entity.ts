@@ -22,7 +22,6 @@ export class User extends Entity implements IEntity {
   
   /** ----------------------| propriétés de l'entité          */
   //protected id: number;
-  protected data = {};
   public fields = UserFields;
 
   private role: Role;

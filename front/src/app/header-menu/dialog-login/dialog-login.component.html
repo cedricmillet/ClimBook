@@ -3,6 +3,7 @@
 <h1 mat-dialog-title class="center">Mon Espace</h1>
 <div mat-dialog-content>
   <mat-tab-group mat-align-tabs="start" *ngIf="!authService.isLogged()">
+    <!-- connexion -->
     <mat-tab label="Connexion">
       <div class="subtabtitle"></div>
       <form>
@@ -34,6 +35,8 @@
       </form>
       
     </mat-tab>
+
+    <!-- inscription -->
     <mat-tab label="Inscription">
       <div class="subtabtitle"></div>
       <mat-form-field class="full-width">
@@ -42,14 +45,17 @@
       </mat-form-field>
       <mat-form-field class="full-width">
         <mat-label>Pseudo</mat-label>
-        <input matInput placeholder="Votre pseudo" [(ngModel)]="reg.pseudo" [ngModelOptions]="{standalone: true}">
+        <input matInput type="email" placeholder="Votre pseudo" [(ngModel)]="reg.pseudo" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
       <mat-form-field class="full-width">
         <mat-label>Mot de passe</mat-label>
         <input matInput type="number" placeholder="Code à 6 chiffres" [(ngModel)]="reg.mdp" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
+
+      <mat-slide-toggle [(ngModel)]="reg.isabonne">Je m'inscris à la newsletter</mat-slide-toggle>
+
       <div class="center">
-        <button mat-fab color="primary">
+        <button mat-fab color="primary" (click)="register()" [ngClass]="{'disabled': !canRegister()}">
           <mat-icon>done_outline</mat-icon>
         </button>
       </div>

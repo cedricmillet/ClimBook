@@ -4,6 +4,19 @@ Progressive Web App intended for the management of a climbing gym.
 
 * [Cahier des charges](https://docs.google.com/document/d/13sVdpy0Ea0QqceZefBAknCtqHe0utRDcX6KWkRcdkI4/)
 
+## Features clients
+* creation de compte, avec choix de participation à la newsletter
+* affichage de la liste des voies
+* possibilité de rentrer un temps d'ascencion sur une voie
+* sur une voie, on peut y voir le reccord
+* il est possible de vérifier un temps (si c'ets une scencion d'aujourd'hui)
+* courbe de progression sur chaque voie, 
+* courbe des niveaux des voies effectuées
+
+## Features admin
+* réinitialiser le mot de passe d'un client
+* gérer les voies (ajout edit, remove)
+
 
 ## Lancement / Installation
 
@@ -39,6 +52,10 @@ docker-compose up
 
 **Une fois lancé, l'API est accessible depuis `http://localhost:6323/api/v1/` et le front depuis `http://localhost:6324/`.**
 
+# Infos techniques
+
+
+
 ## Frontend
 Angular 10.0.4
 
@@ -57,3 +74,4 @@ Restful API with Express/Typescript/PostgreSql.
 * `API_DB_USER`
 * `API_DB_PASS`
 * `API_DB_DATABASE`
+

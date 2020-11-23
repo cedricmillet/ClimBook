@@ -2,7 +2,7 @@
     <span id="pageTitle">{{pageName}}</span>
     
     <div class="rightsection">
-        <span *ngIf="authService.isLogged()">Bonjour {{authService?.getSession()?.pseudo}},</span>
+        <span *ngIf="authService.isLogged()">Bonjour {{userService?.getPseudo()}},</span>
         <span>
             <button mat-mini-fab color="primary" id="loginButton" (click)="openLoginDialog()">
                 <mat-icon>account_circle</mat-icon>
