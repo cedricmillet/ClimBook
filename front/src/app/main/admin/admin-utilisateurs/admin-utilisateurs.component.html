@@ -1,0 +1,33 @@
+<h2 class="mt-1">Administration des utilisateurs</h2>
+
+<!--loader-->
+<mat-progress-bar *ngIf="!users" mode="indeterminate" class="mt-2"></mat-progress-bar>
+
+<!--datatable-->
+<table class="fullwidth mt-1 table-admin">
+    <thead>
+        <tr>
+            <td *ngFor="let col of columns_head">{{col}}</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{user.id}}</td>
+            <td>{{user.pseudo}}</td>
+            <td>{{user.email}}</td>
+            <td>
+                <button mat-icon-button class="icon-reset" (click)="resetPassword(user)">
+                    <mat-icon>vpn_key</mat-icon>
+                </button>
+            </td>
+            <td>
+                <button mat-icon-button class="icon-update" (click)="updateOne(user)">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-icon-button class="icon-delete" (click)="deleteOne(user.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

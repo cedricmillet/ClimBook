@@ -59,6 +59,7 @@ export class UserBuilder extends User implements EntityBuilder<User>  {
     for (let key in dataset) {
       if (this.fields[key]) e.set(this.fields[key], dataset[key]);
     }
+    //console.log(dataset, "fin ===", e.getData())
     return e;
   }
 }

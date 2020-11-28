@@ -103,6 +103,7 @@ export abstract class DAO<E extends Entity> {
     try {
       const query: string = this.updateQuery;
       const values = this.nextQueryValues;
+      console.log(query, values)
       const pool = DBManager.getPool();
       const result = await pool.query(query, values);
       return result;

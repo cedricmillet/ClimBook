@@ -123,6 +123,11 @@ INSERT INTO roles (id, role) VALUES(2, 'client');
 INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(1, 1, 'admin', crypt('000000', gen_salt('bf')), 'admin@domain.com',true);
 INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(2, 2, 'client', crypt('123456', gen_salt('bf')), 'client@domain.com',false);
 
+INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(3, 1, 'cedric', crypt('000000', gen_salt('bf')), 'cedric@domain.com',true);
+INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(4, 1, 'tom', crypt('000000', gen_salt('bf')), 'tom@domain.com',true);
+INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(5, 1, 'arnaud', crypt('000000', gen_salt('bf')), 'arnaud@domain.com',true);
+INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(6, 1, 'jean', crypt('000000', gen_salt('bf')), 'jean@domain.com',true);
+
 -- AJOUT DES NIVEAUX
 --
 INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(1,3,'3A','blanc');
@@ -142,8 +147,13 @@ INSERT INTO voies (id,id_niveau,nom) VALUES(3,2,'Un nouvel espoir');
 -- AJOUT DES ASCENSION
 --
 INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(1,2,1,'32:12.32');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(2,2,2,'39:12.48');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(3,2,3,'39:12.25');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(2,2,3,'39:12.25');
+
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(3,2,2,'16:10.18');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(4,3,2,'59:95.28');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(5,4,2,'32:18.47');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(6,5,2,'30:82.18');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(7,6,2,'15:12.67');
 
 
 --
@@ -195,7 +205,7 @@ $$ LANGUAGE SQL;
 CREATE OR REPLACE FUNCTION
    getBestGrimp(id_v INTEGER)
 RETURNS SETOF record AS $$
-    SELECT utilisateurs.id , utilisateurs.pseudo FROM utilisateurs, ascensions, voies
+    SELECT utilisateurs.id , utilisateurs.pseudo, ascensions.temps FROM utilisateurs, ascensions, voies
     WHERE voies.id = id_v
     AND ascensions.id_voie = voies.id
     AND utilisateurs.id = ascensions.id_utilisateur

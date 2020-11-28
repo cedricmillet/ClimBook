@@ -19,7 +19,7 @@
                     <div mat-line>{{bloc?.nom}}</div>
                     <div mat-line>{{bloc?.datev | date:'d MMMM y'}}</div>
                 </mat-list-item>
-                <mat-list-item role="listitem" class="center">
+                <mat-list-item role="listitem" class="center" *ngIf="voies">
                     <div mat-line>{{voies?.length}} {{voies?.length>1 ? 'voies disponibles' : 'voie disponible'}}</div>
                 </mat-list-item>
             </mat-list>
@@ -29,6 +29,11 @@
     </div>
     <div class="col col-6">
         <div class="container">
+            <mat-card *ngIf="selectedBlock == null">
+                <mat-card-content>
+                    Veuillez sélectionner une voie dans la liste.
+                </mat-card-content>
+            </mat-card>
             <mat-card class="example-card" *ngIf="selectedBlock != null">
                 <mat-card-header>
                     <mat-card-title>{{selectedBlock?.nom}}</mat-card-title>

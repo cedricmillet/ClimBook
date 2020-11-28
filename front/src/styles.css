@@ -46,10 +46,12 @@ h1, h2, h3, h4, h5 { margin: 0; }
     padding-right: 30px;
     width: calc(100% - 2 * 30px)
 }
-.mt-1 { margin-top: 2em; }
+.mt-1 { margin-top: 1em; }
 .mt-2 { margin-top: 2em; }
 .mt-3 { margin-top: 3em; }
 .mt-4 { margin-top: 4em; }
+.mb-1 { margin-bottom: 1em; }
+.mb-2 { margin-bottom: 2em; }
 
 .transform-x {
     margin-left: 50%;
@@ -60,3 +62,38 @@ h1, h2, h3, h4, h5 { margin: 0; }
     border-radius: 50%;
     border: 4px solid blue;
 }
+
+
+
+/* ADMIN DATATABLE */
+.table-admin {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 2px solid var(--second-color);
+}
+
+.table-admin thead {
+    font-weight: bold;
+    text-align: left;
+}
+
+.table-admin thead tr {
+    background: var(--second-color);
+}
+.table-admin thead tr td {
+    padding-top: .6em;
+    padding-bottom: .6em;
+}
+.table-admin tbody tr:nth-child(odd) {
+    background: rgba(255,255,255,1);
+}
+.table-admin tbody tr:nth-child(2n+1) {
+    background: rgb(230, 229, 229);
+}
+
+.table-admin .icon-delete { color: rgb(236, 82, 82) }
+.table-admin .icon-delete:hover { color: rgb(231, 49, 49) }
+.table-admin .icon-update { color: rgb(236, 180, 74)}
+.table-admin .icon-update:hover { color: rgb(233, 165, 39)}
+.table-admin .icon-reset { color: rgb(88, 189, 202)}
+.table-admin .icon-reset:hover { color: rgb(45, 152, 167)}

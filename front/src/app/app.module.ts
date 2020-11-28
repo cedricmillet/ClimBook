@@ -26,10 +26,14 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import {MatTableModule} from '@angular/material/table';
 //  Routing
 import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
+  { path: 'administration/utilisateurs', component: AdminUtilisateursComponent, data: {pageName: "Administration des utilisateurs"} },
+  { path: 'administration/voies', component: AdminVoiesComponent, data: {pageName: "Administration des voies"} },
   { path: 'les-blocs', component: EcranBlocsComponent, data: {pageName: "Les blocs"} },
   { path: 'classements', component: EcranClassementsComponent, data: {pageName: "Classement general"} },
   { path: 'progression', component: EcranProgressionComponent, data: {pageName: "Ma progression"} },
@@ -47,6 +51,11 @@ import { EcranClassementsComponent } from './main/ecran-classements/ecran-classe
 import { EcranBlocsComponent } from './main/ecran-blocs/ecran-blocs.component';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
 import { DialogLoginComponent } from './header-menu/dialog-login/dialog-login.component';
+import { AdminUtilisateursComponent } from './main/admin/admin-utilisateurs/admin-utilisateurs.component';
+import { AdminVoiesComponent } from './main/admin/admin-voies/admin-voies.component';
+import { ModalAdminVoiesComponent } from './main/admin/admin-voies/modal-admin-voies/modal-admin-voies.component';
+import { ModalAdminUtilisateursComponent } from './main/admin/admin-utilisateurs/modal-admin-utilisateurs/modal-admin-utilisateurs.component';
+import { ModalAdminResetpasswdComponent } from './main/admin/admin-utilisateurs/modal-admin-resetpasswd/modal-admin-resetpasswd.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +66,12 @@ import { DialogLoginComponent } from './header-menu/dialog-login/dialog-login.co
     EcranClassementsComponent,
     EcranBlocsComponent,
     HeaderMenuComponent,
-    DialogLoginComponent
+    DialogLoginComponent,
+    AdminUtilisateursComponent,
+    AdminVoiesComponent,
+    ModalAdminVoiesComponent,
+    ModalAdminUtilisateursComponent,
+    ModalAdminResetpasswdComponent
   ],
   imports: [
     BrowserModule, FormsModule,
@@ -70,7 +84,8 @@ import { DialogLoginComponent } from './header-menu/dialog-login/dialog-login.co
     //  Angular Material Components
     MatButtonModule, MatListModule, MatIconModule, MatDialogModule, MatInputModule, MatTabsModule, 
     MatCardModule, MatExpansionModule, MatSelectModule, MatProgressSpinnerModule,
-    MatProgressBarModule, MatSnackBarModule, MatSlideToggleModule,
+    MatProgressBarModule, MatSnackBarModule, MatSlideToggleModule, MatDividerModule,
+    MatTableModule
     
   ],
   exports: [RouterModule],

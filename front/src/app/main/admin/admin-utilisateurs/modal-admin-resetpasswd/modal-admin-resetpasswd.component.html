@@ -1,0 +1,20 @@
+<h2>Réinitalisation mot de passe</h2>
+
+<section *ngIf="!pwdChanged">
+    <ul>
+        <li>ID utilisateur: {{data.id}}</li>
+        <li>Pseudo: {{data.pseudo}}</li>
+        <li>Email: {{data.email}}</li>
+        <bR>
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Nouveau mot de passe</mat-label>
+            <input matInput placeholder="6 chiffres" [(ngModel)]="newPassword" required>
+            <mat-error></mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="change()" [disabled]="newPassword.length!=6" class="mt-1">Modifier le mot de passe</button>
+    </ul>
+</section>
+
+<section *ngIf="pwdChanged">
+    <p>Le mot de passe de {{data.pseudo}} a été modifié avec succès.</p>
+</section>

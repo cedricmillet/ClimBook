@@ -1,0 +1,30 @@
+<p>Edition utilisateur (id={{data.id}})</p>
+
+
+<div class="center">
+
+    <mat-form-field appearance="fill" class="select-filter full-width">
+        <mat-label>Role de l'utilisateur</mat-label>
+        <mat-select [(ngModel)]="data.id_role">
+          <mat-option *ngFor="let role of roles" [value]="role.id" >
+            {{role.role}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="email@domai.com" [(ngModel)]="data.email" required>
+        <mat-error></mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Pseudo</mat-label>
+        <input matInput placeholder="Pseudo" [(ngModel)]="data.pseudo" required>
+        <mat-error></mat-error>
+    </mat-form-field>
+
+
+    <button mat-raised-button color="warn" (click)="update()">Enregistrer</button>
+
+</div>

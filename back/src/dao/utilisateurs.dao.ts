@@ -69,6 +69,16 @@ export class DAO_Utilisateur extends DAO<User> {
   }
 
 
+  public async updatePassword(userId:number, newPassword:string): Promise<boolean | null> {
+    const query: string = `UPDATE ${this.getTableName()} SET mdp=crypt($1, gen_salt('bf')) WHERE id=$2`;
+    const values = [newPassword, userId];
+    const pool = DBManager.getPool();
+    const result = await pool.query(query, values);
+    console.log(result)
+    return result.rowCount == 1 ? true : false;
+  }
+
+
   public async getByFieldValuePair(field:string, value:any) {
     return await super.getByFieldValuePair(field, value);
   }

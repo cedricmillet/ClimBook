@@ -53,6 +53,22 @@ export class ApiService {
         );
       })
   }
+
+  http_delete(url, data={}) {
+    return new Promise(async (res, rej) => {
+      const r = await this.http.delete(url, data).subscribe(
+        (data: any) => {
+          if (!data) rej(data);
+          else res(data);
+        },
+        error => {
+          console.log("api.service : erreur requete : ", error)
+          //this.snackMsg("Erreur - HTTP POST - réponse API : " + error.status, 6000)
+          rej(error)
+        }
+        );
+      })
+  }
   
 
   }

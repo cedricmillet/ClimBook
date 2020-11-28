@@ -1,8 +1,8 @@
 <img src="./assets/img/logo.png" alt="logo_salle" />
 
 <mat-list role="list">
-
-
+    
+    
     <mat-list-item class="menuitem" role="listitem" [routerLink]="['/les-blocs']" [routerLinkActive]="['active']">
         <mat-icon mat-list-icon>list</mat-icon> 
         <div mat-line>Les blocs</div>
@@ -15,5 +15,20 @@
         <mat-icon mat-list-icon>trending_up</mat-icon>
         <div mat-line>Ma progression</div>
     </mat-list-item>
+    
+    <div *ngIf="this.userService.getRole() == 'admin'">
+        <mat-divider class="admin-section-separator"></mat-divider>
+        <h3 class="center mb-1">Administration</h3>
+        
+        <mat-list-item class="menuitem admin" role="listitem"  [routerLink]="['/administration/utilisateurs']" [routerLinkActive]="['active']">
+            <mat-icon mat-list-icon>build</mat-icon>
+            <div mat-line>Utilisateurs</div>
+        </mat-list-item>
+        <mat-list-item class="menuitem admin" role="listitem"  [routerLink]="['/administration/voies']" [routerLinkActive]="['active']">
+            <mat-icon mat-list-icon>build</mat-icon>
+            <div mat-line>Blocs</div>
+        </mat-list-item>
+    </div>
+    
 </mat-list>
 
