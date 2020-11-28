@@ -122,12 +122,10 @@ INSERT INTO roles (id, role) VALUES(2, 'client');
 --
 INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(1, 1, 'admin', crypt('000000', gen_salt('bf')), 'admin@domain.com',true);
 INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(2, 2, 'client', crypt('123456', gen_salt('bf')), 'client@domain.com',false);
-
 INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(3, 1, 'cedric', crypt('000000', gen_salt('bf')), 'cedric@domain.com',true);
 INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(4, 1, 'tom', crypt('000000', gen_salt('bf')), 'tom@domain.com',true);
 INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(5, 1, 'arnaud', crypt('000000', gen_salt('bf')), 'arnaud@domain.com',true);
 INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(6, 1, 'jean', crypt('000000', gen_salt('bf')), 'jean@domain.com',true);
-
 -- AJOUT DES NIVEAUX
 --
 INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(1,3,'3A','blanc');
@@ -147,21 +145,23 @@ INSERT INTO voies (id,id_niveau,nom) VALUES(3,2,'Un nouvel espoir');
 -- AJOUT DES ASCENSION
 --
 INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(1,2,1,'32:12.32');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(2,2,3,'39:12.25');
-
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(3,2,2,'16:10.18');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(4,3,2,'59:95.28');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(5,4,2,'32:18.47');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(6,5,2,'30:82.18');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(7,6,2,'15:12.67');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(2,2,2,'39:12.48');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(3,3,1,'32:10.2');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(4,4,1,'31:10.2');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(5,5,1,'30:10.2');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(6,6,1,'26:10.2');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(7,7,1,'25:10.2');
 
 
 --
 -- AJOUT DES VALIDATIONS
 --
-INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(1,1,2);
+INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(1,1,1);
 INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(2,2,1);
-
+INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(3,7,6);
+INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(4,5,4);
+INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(5,3,5);
+INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(6,6,7);
 
 
 /*-----------------------------------------
@@ -245,3 +245,98 @@ CREATE TRIGGER supp_utilisateur
     ON utilisateurs 
     FOR EACH ROW
 EXECUTE PROCEDURE supp_utilisateur();
+
+
+-- Quand le niveau d'une voie est changé, la couleur associée change.
+
+DROP TRIGGER IF EXISTS changeCouleur ON voies;
+
+CREATE OR REPLACE FUNCTION changeCouleur()
+    RETURNS TRIGGER AS
+    $$
+	DECLARE couleurold VARCHAR(20);
+	couleurnew VARCHAR(20);
+    BEGIN
+        IF(NEW.id = OLD.id) THEN
+		SELECT couleur INTO couleurold FROM niveaux WHERE id = OLD.id_niveau;
+		SELECT couleur INTO couleurnew FROM niveaux WHERE id = NEW.id_niveau;
+		RAISE NOTICE 'ancienne couleur : % nouvelle couleur : %', couleurold, couleurnew;
+		END IF;
+		RETURN NEW;
+    END;
+    $$
+    LANGUAGE PLPGSQL;
+
+
+CREATE TRIGGER changeCouleur
+    BEFORE UPDATE
+    ON voies 
+    FOR EACH ROW
+EXECUTE PROCEDURE changeCouleur();
+
+-- Vérifier que l’id des utilisateurs sont différents dans la table chronos sur une ligne à l’insertion.
+
+DROP TRIGGER IF EXISTS compareid ON chronos;
+
+CREATE OR REPLACE FUNCTION compareid()
+    RETURNS TRIGGER AS
+    $$
+	DECLARE idmonteur INTEGER;
+	idinsert INTEGER;
+    BEGIN
+	SELECT id_utilisateur INTO idmonteur FROM ascensions WHERE id = NEW.id_ascension;
+	idinsert = NEW.id_ascension;
+	RAISE NOTICE 'id selectionne: % id inséré : %', idmonteur, idinsert;
+	IF(idmonteur = NEW.id_utilisateur) THEN
+	RAISE EXCEPTION 'le grimpeur et le chronometreur doivent etre differents';
+	END IF;
+	RETURN NEW;
+    END;
+    $$
+    LANGUAGE PLPGSQL;
+
+
+CREATE TRIGGER compareid
+    BEFORE INSERT
+    ON chronos 
+	FOR EACH ROW
+EXECUTE PROCEDURE compareid();
+
+-- Mettre à jour le meilleur grimpeur, le temps moyen des voies, 
+-- et le niveau moyen d'un utilisateur à chaque insertion d'ascension.
+
+DROP TRIGGER IF EXISTS miseajour ON ascensions;
+
+CREATE OR REPLACE FUNCTION miseajour()
+    RETURNS TRIGGER AS
+    $$
+	DECLARE newtemps TIME;
+	newniveaux INTEGER;
+	newidbest INTEGER;
+	newpseudobest VARCHAR(20);
+	BEGIN
+	SELECT * INTO newtemps FROM getTempsMoyen(NEW.id_voie) AS (Record TIME);
+	SELECT * INTO newniveaux FROM getNiveauMoyen(NEW.id_utilisateur) AS (Moyenne Integer) ;
+	SELECT * INTO newidbest, newpseudobest FROM getBestGrimp(NEW.id_voie) AS (id_u INTEGER, pseudo_u VARCHAR);
+	RAISE NOTICE 'votre nouveau niveau est : % et le nouveau temps moyen voie : %', newniveaux , newtemps;
+	RAISE NOTICE 'Le meilleur grimpeur de la voie est maintenant : % ', newpseudobest;
+	RETURN NULL;
+    END;
+    $$
+    LANGUAGE PLPGSQL;
+
+
+CREATE TRIGGER miseajour
+    AFTER INSERT
+    ON ascensions
+	FOR EACH ROW
+EXECUTE PROCEDURE miseajour();
+
+
+--TEST
+
+--DELETE FROM utilisateurs WHERE id = 4 ;
+--UPDATE voies SET id_niveau = 5 WHERE id=3;
+--INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(7,1,2);
+--INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(8,7,2,'22:11.30');
+
