@@ -28,7 +28,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+
 //  Routing
 import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
@@ -85,7 +88,7 @@ import { ModalAdminResetpasswdComponent } from './main/admin/admin-utilisateurs/
     MatButtonModule, MatListModule, MatIconModule, MatDialogModule, MatInputModule, MatTabsModule, 
     MatCardModule, MatExpansionModule, MatSelectModule, MatProgressSpinnerModule,
     MatProgressBarModule, MatSnackBarModule, MatSlideToggleModule, MatDividerModule,
-    MatTableModule
+    MatTableModule, MatDatepickerModule, MatNativeDateModule
     
   ],
   exports: [RouterModule],

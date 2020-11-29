@@ -1,1 +1,31 @@
-<p>modal-admin-voies works!</p>
+<p>Edition d'un bloc (id={{data.id}})</p>
+
+
+<div class="center">
+
+    <mat-form-field appearance="fill" class="select-filter full-width">
+        <mat-label>Difficulté du bloc</mat-label>
+        <mat-select [(ngModel)]="data.id_niveau">
+          <mat-option *ngFor="let niv of niveaux" [value]="niv.id" >
+            {{niv.nom}} ({{niv.couleur}})
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Date d'ajout</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="data.datev">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input matInput placeholder="Nom" [(ngModel)]="data.nom" required>
+        <mat-error></mat-error>
+    </mat-form-field>
+
+
+    <button mat-raised-button color="warn" (click)="update()">Enregistrer</button>
+
+</div>

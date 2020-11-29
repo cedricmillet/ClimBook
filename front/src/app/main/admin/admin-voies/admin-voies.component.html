@@ -1,1 +1,29 @@
-<p>admin-voies works!</p>
+<h2 class="mt-1">Administration des blocs d'escalade</h2>
+
+<!--loader-->
+<mat-progress-bar *ngIf="!voies" mode="indeterminate" class="mt-2"></mat-progress-bar>
+
+<!--datatable-->
+<table class="fullwidth mt-1 table-admin">
+    <thead>
+        <tr>
+            <td *ngFor="let col of columns_head">{{col}}</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bloc of voies">
+            <td>{{bloc.id}}</td>
+            <td>{{bloc.niveau.nom}}</td>
+            <td>{{bloc.nom}}</td>
+            <td>{{bloc.datev | date}}</td>
+            <td>
+                <button mat-icon-button class="icon-update" (click)="updateOne(bloc)">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-icon-button class="icon-delete" (click)="deleteOne(bloc.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,5 +1,5 @@
-import {Controller, Get, Post, BodyParams, ContentType, Returns, UseAuth, QueryParams, PathParams} from "@tsed/common";
-import { Voie } from "../entities/voie.entity";
+import {Controller, Get, Post, BodyParams, ContentType, Returns, UseAuth, QueryParams, PathParams, Delete, Required} from "@tsed/common";
+import { Voie, VoieBuilder } from '../entities/voie.entity';
 import { DAO_Voie } from '../dao/voies.dao';
 import { AuthCheck } from "../guards/login.guard";
 import { DAO_Niveau } from '../dao/niveaux.dao';
@@ -30,6 +30,16 @@ export class CalendarCtrl {
     return JSON.stringify(voies);
   }
 
+
+  @Post()
+  //@UseAuth(AuthCheck)
+  async updateOne(@Required() @BodyParams("user") voie: any) {
+    const bloc = new VoieBuilder().fromDataSet(voie);
+    const update = await new DAO_Voie().update(bloc);
+    console.log("update voie : ", update);
+    return true;
+  }
+
   /**
    * Récupérer des infos sur une voie donnée
    * il est possible d'ajouter des arguments
@@ -44,6 +54,12 @@ export class CalendarCtrl {
     return JSON.stringify(vData);
   }
 
+  @Delete('/:id')
+  //@UseAuth(AuthCheck)
+  async deleteOne(@PathParams("id") id: number) {
+    const del = await new DAO_Voie().delete(id);
+    return del;
+  }
 
 
   
