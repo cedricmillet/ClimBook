@@ -40,7 +40,7 @@ services:
       driver: none 
   # Backend
   backend:
-    image: thecyrion/bdd_cnam:back-0.1
+    image: thecyrion/bdd_cnam:back-0.2
     build: ./back/
     environment:
       - API_PORT=7777
@@ -58,7 +58,7 @@ services:
       - db
   # FrontEnd
   frontend:
-    image: thecyrion/bdd_cnam:front-0.1
+    image: thecyrion/bdd_cnam:front-0.2
     build:
       context: ./front/
     ports:

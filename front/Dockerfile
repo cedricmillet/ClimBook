@@ -38,7 +38,7 @@ COPY . /front
 #RUN ng e2e --port 4202
 
 # generate build
-RUN ng build --output-path=dist && ls
+RUN ng build --prod --output-path=dist && ls
 
 ############
 ### prod ###

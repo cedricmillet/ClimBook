@@ -3,6 +3,7 @@
 Progressive Web App intended for the management of a climbing gym.
 
 * [Cahier des charges](https://docs.google.com/document/d/13sVdpy0Ea0QqceZefBAknCtqHe0utRDcX6KWkRcdkI4/)
+* [Docker Hub Repository](https://hub.docker.com/repository/docker/thecyrion/bdd_cnam)
 
 ## Features clients
 * creation de compte, avec choix de participation à la newsletter
