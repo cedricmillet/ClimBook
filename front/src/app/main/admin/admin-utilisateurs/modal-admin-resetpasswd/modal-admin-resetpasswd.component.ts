@@ -27,8 +27,8 @@ export class ModalAdminResetpasswdComponent implements OnInit {
       const req_data = { pwd: this.newPassword };
       console.log("ok !")
       const req_res = <any>(await this.api.http_post(req_url, req_data));
-      
-      console.log(req_res)
+      if (req_res == true)
+        this.pwdChanged = true;
     } catch (error) {
       console.log("erreur : ", error)
     }

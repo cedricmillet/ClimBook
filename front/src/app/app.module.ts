@@ -37,6 +37,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: 'administration/utilisateurs', component: AdminUtilisateursComponent, data: {pageName: "Administration des utilisateurs"} },
   { path: 'administration/voies', component: AdminVoiesComponent, data: {pageName: "Administration des voies"} },
+  { path: 'administration/niveaux', component: AdminNiveauxComponent, data: {pageName: "Administration des niveaux"} },
   { path: 'les-blocs', component: EcranBlocsComponent, data: {pageName: "Les blocs"} },
   { path: 'classements', component: EcranClassementsComponent, data: {pageName: "Classement general"} },
   { path: 'progression', component: EcranProgressionComponent, data: {pageName: "Ma progression"} },
@@ -59,6 +60,8 @@ import { AdminVoiesComponent } from './main/admin/admin-voies/admin-voies.compon
 import { ModalAdminVoiesComponent } from './main/admin/admin-voies/modal-admin-voies/modal-admin-voies.component';
 import { ModalAdminUtilisateursComponent } from './main/admin/admin-utilisateurs/modal-admin-utilisateurs/modal-admin-utilisateurs.component';
 import { ModalAdminResetpasswdComponent } from './main/admin/admin-utilisateurs/modal-admin-resetpasswd/modal-admin-resetpasswd.component';
+import { AdminNiveauxComponent } from './main/admin/admin-niveaux/admin-niveaux.component';
+import { ModalAdminNiveauxComponent } from './main/admin/admin-niveaux/modal-admin-niveaux/modal-admin-niveaux.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +77,9 @@ import { ModalAdminResetpasswdComponent } from './main/admin/admin-utilisateurs/
     AdminVoiesComponent,
     ModalAdminVoiesComponent,
     ModalAdminUtilisateursComponent,
-    ModalAdminResetpasswdComponent
+    ModalAdminResetpasswdComponent,
+    AdminNiveauxComponent,
+    ModalAdminNiveauxComponent
   ],
   imports: [
     BrowserModule, FormsModule,
@@ -94,7 +99,8 @@ import { ModalAdminResetpasswdComponent } from './main/admin/admin-utilisateurs/
   exports: [RouterModule],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true},
-    {provide: LOCALE_ID, useValue: "fr-CA" }  /** dates en francais */
+    /*{provide: LOCALE_ID, useValue: "fr-CA" }, */ /** dates en francais */
+    
   ],
   bootstrap: [AppComponent]
 })

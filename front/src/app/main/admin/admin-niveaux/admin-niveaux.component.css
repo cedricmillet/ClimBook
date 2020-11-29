@@ -1,0 +1,12 @@
+.color-block {
+    width: 3em;
+    height: 1em;
+    background: grey;
+}
+
+.color-block.violet { background: var(--bloc-violet); }
+.color-block.noir { background: var(--bloc-noir); }
+.color-block.rouge { background: var(--bloc-rouge); }
+.color-block.bleu { background: var(--bloc-bleu); }
+.color-block.vert { background: var(--bloc-vert); }
+.color-block.blanc { background: var(--bloc-blanc); }

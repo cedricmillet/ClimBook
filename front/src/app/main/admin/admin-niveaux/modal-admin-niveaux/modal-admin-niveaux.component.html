@@ -1,0 +1,33 @@
+<p *ngIf="!isAddForm">Edition d'un niveau (id={{data.id}})</p>
+<p *ngIf="isAddForm">Création d'un niveau</p>
+
+
+<div class="center">
+
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Difficulté</mat-label>
+        <input matInput type="number" placeholder="Nbre de points" [(ngModel)]="data.difficulte" required>
+        <mat-error></mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input matInput placeholder="Nom" [(ngModel)]="data.nom" required>
+        <mat-error></mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="select-filter full-width">
+        <mat-label>Couleur</mat-label>
+        <mat-select [(ngModel)]="data.couleur">
+          <mat-option *ngFor="let col of colors" [value]="col.label" >
+            {{col.label}} => {{col.color}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <button *ngIf="!isAddForm" mat-raised-button color="warn" (click)="update()">Enregistrer</button>
+    <button *ngIf="isAddForm" mat-raised-button color="warn" (click)="add()">Ajouter</button>
+
+</div>

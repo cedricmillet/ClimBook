@@ -8,13 +8,19 @@ import { ApiService } from '../../../../services/api.service';
   styleUrls: ['./modal-admin-utilisateurs.component.css']
 })
 export class ModalAdminUtilisateursComponent implements OnInit {
+  isAddForm: boolean = false;
 
   @Output()
   onClose: EventEmitter<boolean> = new EventEmitter();
   
   roles: any[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private api: ApiService) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private api: ApiService) {
+    if (!this.data) {
+      this.data = {};
+      this.isAddForm = true;
+    }
+  }
 
   ngOnInit(): void {
     this.loadRoleList();
@@ -33,6 +39,15 @@ export class ModalAdminUtilisateursComponent implements OnInit {
     const url:string = this.api.get_uri('/roles')
     this.roles = <any>(await this.api.http_get(url));
     console.log(this.roles)
+  }
+
+
+  async add() {
+    const req_url: string = this.api.get_uri(`/utilisateurs`)
+    const req_data = { user: this.data };
+    const req_res = <any>(await this.api.http_put(req_url, req_data));
+    this.onClose.emit(true);
+    console.log(req_res)
   }
 
     

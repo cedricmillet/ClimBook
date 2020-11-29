@@ -1,4 +1,5 @@
-<p>Edition d'un bloc (id={{data.id}})</p>
+<p *ngIf="!isAddForm">Edition d'un bloc (id={{data.id}})</p>
+<p *ngIf="isAddForm">Création d'un bloc</p>
 
 
 <div class="center">
@@ -26,6 +27,7 @@
     </mat-form-field>
 
 
-    <button mat-raised-button color="warn" (click)="update()">Enregistrer</button>
+    <button mat-raised-button color="warn" *ngIf="!isAddForm" (click)="update()">Mettre à jour</button>
+    <button mat-raised-button color="warn" *ngIf="isAddForm" (click)="add()">Ajouter</button>
 
 </div>

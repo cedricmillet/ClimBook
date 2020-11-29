@@ -15,6 +15,7 @@
             <td>{{user.id}}</td>
             <td>{{user.pseudo}}</td>
             <td>{{user.email}}</td>
+            <td>{{user.isabonne ? 'Oui' : 'Non'}}</td>
             <td>
                 <button mat-icon-button class="icon-reset" (click)="resetPassword(user)">
                     <mat-icon>vpn_key</mat-icon>
@@ -31,3 +32,11 @@
         </tr>
     </tbody>
 </table>
+
+<!-- add -->
+<section class="center mt-2">
+    <button mat-button class="icon-add" (click)="addOne()">
+        <mat-icon>add_circle</mat-icon>
+        Ajouter un utilisateur
+    </button>
+</section>

@@ -19,7 +19,7 @@ export interface Utilisateur {
   styleUrls: ['./admin-utilisateurs.component.css']
 })
 export class AdminUtilisateursComponent implements OnInit {
-  columns_head: string[] = ['ID', 'Pseudo', 'Email', 'Reset Password', 'Actions'];
+  columns_head: string[] = ['ID', 'Pseudo', 'Email', 'Abonné newsletter', 'Reset Password', 'Actions'];
   
   users: Utilisateur[] = [];
   
@@ -36,6 +36,17 @@ export class AdminUtilisateursComponent implements OnInit {
     console.log(this.users)
   }
 
+  /** addOne */
+  async addOne() {
+    const dialogRef = this.dialog.open(ModalAdminUtilisateursComponent, {
+      data: null
+    });
+    dialogRef.componentInstance.onClose.subscribe(d => {
+      dialogRef.close();
+      this.loadList();
+    })
+  }
+
   /** update */
   async updateOne(user:Utilisateur) {
     const dialogRef = this.dialog.open(ModalAdminUtilisateursComponent, {
@@ -45,11 +56,6 @@ export class AdminUtilisateursComponent implements OnInit {
       dialogRef.close();
       this.loadList();
     })
-    /*
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });*/
   }
 
   /** delete */

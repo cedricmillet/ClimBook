@@ -1,4 +1,4 @@
-import {Controller, Get, Post, BodyParams, ContentType, Returns, UseAuth, Delete, Required, PathParams} from "@tsed/common";
+import {Controller, Get, Post, BodyParams, ContentType, Returns, UseAuth, Delete, Required, PathParams, Put} from "@tsed/common";
 import { Voie } from "../entities/voie.entity";
 import { DAO_Voie } from '../dao/voies.dao';
 import { AuthCheck } from "../guards/login.guard";
@@ -10,6 +10,7 @@ import { User, UserBuilder } from '../entities/user.entity';
 @ContentType("json")
 export class CalendarCtrl {
 
+  /** select all */
   @Get()
   //@UseAuth(AuthCheck)
   async findAll(): Promise<User[]> {
@@ -17,6 +18,19 @@ export class CalendarCtrl {
     return voies;
   }
 
+  /** add one */
+  @Put()
+  //@UseAuth(AuthCheck)
+  async addOne(@Required() @BodyParams("user") user: any) {
+    const obj = new UserBuilder().fromDataSet(user);
+    const update = await new DAO_Utilisateur().insert(obj);
+    const updatePwd = await new DAO_Utilisateur().updatePassword(update.getId(), user.mdp);
+    console.log("add user : ", update);
+    console.log("change user password # ", update.getId(), " => ",  updatePwd);
+    return true;
+  }
+
+  /** update one */
   @Post()
   //@UseAuth(AuthCheck)
   async updateOne(@Required() @BodyParams("user") usr: any) {
@@ -26,6 +40,7 @@ export class CalendarCtrl {
     return true;
   }
 
+  /** delete one */
   @Delete('/:id')
   //@UseAuth(AuthCheck)
   async deleteOne(@PathParams("id") id: number) {
@@ -33,6 +48,7 @@ export class CalendarCtrl {
     return del;
   }
 
+  /** change user password */
   @Post('/:id/changepwd')
   //@UseAuth(AuthCheck)
   async changePwd(@PathParams("id") id: number, @Required() @BodyParams("pwd") pwd: string) {

@@ -1,4 +1,4 @@
-import {Controller, Get, Post, BodyParams, ContentType, Returns, UseAuth, QueryParams, PathParams, Delete, Required} from "@tsed/common";
+import {Controller, Get, Post, BodyParams, ContentType, Returns, UseAuth, QueryParams, PathParams, Delete, Required, Put} from "@tsed/common";
 import { Voie, VoieBuilder } from '../entities/voie.entity';
 import { DAO_Voie } from '../dao/voies.dao';
 import { AuthCheck } from "../guards/login.guard";
@@ -30,10 +30,21 @@ export class CalendarCtrl {
     return JSON.stringify(voies);
   }
 
+  /** add one */
+  @Put()
+  //@UseAuth(AuthCheck)
+  async addOne(@Required() @BodyParams("voie") voie: any) {
+    const obj = new VoieBuilder().fromDataSet(voie);
+    console.log("ajout en bdd : ", obj)
+    const update = await new DAO_Voie().insert(obj);
+    console.log("add voie : ", update);
+    return true;
+  }
 
+  /** update one */
   @Post()
   //@UseAuth(AuthCheck)
-  async updateOne(@Required() @BodyParams("user") voie: any) {
+  async updateOne(@Required() @BodyParams("voie") voie: any) {
     const bloc = new VoieBuilder().fromDataSet(voie);
     const update = await new DAO_Voie().update(bloc);
     console.log("update voie : ", update);
@@ -53,7 +64,8 @@ export class CalendarCtrl {
     const vData = voie.getData();
     return JSON.stringify(vData);
   }
-
+  
+  
   @Delete('/:id')
   //@UseAuth(AuthCheck)
   async deleteOne(@PathParams("id") id: number) {

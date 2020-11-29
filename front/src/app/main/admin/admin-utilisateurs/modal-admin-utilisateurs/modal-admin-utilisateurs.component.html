@@ -1,5 +1,5 @@
-<p>Edition utilisateur (id={{data.id}})</p>
-
+<p *ngIf="!isAddForm">Edition utilisateur (id={{data.id}})</p>
+<p *ngIf="isAddForm">Création d'un utilisateur</p>
 
 <div class="center">
 
@@ -24,7 +24,15 @@
         <mat-error></mat-error>
     </mat-form-field>
 
+    <mat-form-field appearance="fill" class="full-width" *ngIf="isAddForm">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput placeholder="Mot de passe" [(ngModel)]="data.mdp" required>
+        <mat-error></mat-error>
+    </mat-form-field>
 
-    <button mat-raised-button color="warn" (click)="update()">Enregistrer</button>
+    <mat-slide-toggle class="mb-1 mt-1" [(ngModel)]="data.isabonne">Abonné newsletter</mat-slide-toggle><br>
+
+    <button mat-raised-button *ngIf="!isAddForm" color="warn" (click)="update()">Enregistrer</button>
+    <button mat-raised-button *ngIf="isAddForm" color="warn" (click)="add()">Ajouter</button>
 
 </div>

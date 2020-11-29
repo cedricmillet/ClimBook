@@ -1,0 +1,39 @@
+<h2 class="mt-1">Administration des niveaux</h2>
+
+<!--loader-->
+<mat-progress-bar *ngIf="!niveaux" mode="indeterminate" class="mt-2"></mat-progress-bar>
+
+<!--datatable-->
+<table class="fullwidth mt-1 table-admin">
+    <thead>
+        <tr>
+            <td *ngFor="let col of columns_head">{{col}}</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let niveau of niveaux">
+            <td>{{niveau.id}}</td>
+            <td>{{niveau.difficulte}} pts</td>
+            <td>{{niveau.nom}}</td>
+            <td>
+                <div class="color-block" [ngClass]="niveau?.couleur"></div>
+            </td>
+            <td>
+                <button mat-icon-button class="icon-update" (click)="updateOne(niveau)">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-icon-button class="icon-delete" (click)="deleteOne(niveau.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- add -->
+<section class="center mt-2">
+    <button mat-button class="icon-add" (click)="addOne()">
+        <mat-icon>add_circle</mat-icon>
+        Ajouter un niveau
+    </button>
+</section>

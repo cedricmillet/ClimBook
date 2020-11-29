@@ -19,6 +19,7 @@ h1, h2, h3, h4, h5 { margin: 0; }
     --bloc-rouge: rgb(221, 0, 0);
     --bloc-bleu: rgb(30, 136, 229);
     --bloc-vert: rgb(0, 128, 0);
+    --bloc-blanc: rgb(255, 255, 255);
 }
 
 .full-width { width: 100% ;}
@@ -46,12 +47,12 @@ h1, h2, h3, h4, h5 { margin: 0; }
     padding-right: 30px;
     width: calc(100% - 2 * 30px)
 }
-.mt-1 { margin-top: 1em; }
-.mt-2 { margin-top: 2em; }
-.mt-3 { margin-top: 3em; }
-.mt-4 { margin-top: 4em; }
-.mb-1 { margin-bottom: 1em; }
-.mb-2 { margin-bottom: 2em; }
+.mt-1 { margin-top: 1em !important; }
+.mt-2 { margin-top: 2em !important; }
+.mt-3 { margin-top: 3em !important; }
+.mt-4 { margin-top: 4em !important; }
+.mb-1 { margin-bottom: 1em !important; }
+.mb-2 { margin-bottom: 2em !important; }
 
 .transform-x {
     margin-left: 50%;
@@ -97,3 +98,5 @@ h1, h2, h3, h4, h5 { margin: 0; }
 .table-admin .icon-update:hover { color: rgb(233, 165, 39)}
 .table-admin .icon-reset { color: rgb(88, 189, 202)}
 .table-admin .icon-reset:hover { color: rgb(45, 152, 167)}
+.icon-add { color: rgb(106, 163, 80)}
+.icon-add:hover { color:rgb(75, 168, 31)}

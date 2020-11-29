@@ -41,6 +41,16 @@ export class AdminVoiesComponent implements OnInit {
     this.niveaux = <any>(await this.api.http_get(url));
   }*/
 
+  async addOne() {
+    const dialogRef = this.dialog.open(ModalAdminVoiesComponent, {
+      data: null
+    });
+    dialogRef.componentInstance.onClose.subscribe(d => {
+      dialogRef.close();
+      this.loadList();
+    })
+  }
+
   /** update */
   async updateOne(voie:Voie) {
     const dialogRef = this.dialog.open(ModalAdminVoiesComponent, {

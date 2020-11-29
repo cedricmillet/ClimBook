@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -6,7 +7,7 @@ import { ApiService } from './api.service';
 })
 export class AuthService {
 
-  constructor(private api:ApiService) { }
+  constructor(private api:ApiService, private router : Router) { }
 
   async request_login(login, pass) {
     try {
@@ -27,6 +28,7 @@ export class AuthService {
       const url = this.api.get_uri('/auth/logout');
       const data = await this.api.http_post(url, {});
       console.log("logout request: ", data)
+      
       return data;
     } catch (error) {
       this.api.snackMsg("Erreur deconnexion", 3000);
@@ -69,5 +71,6 @@ export class AuthService {
     await this.request_logout();
     localStorage.clear();
     console.log("clear user session !")
+    this.router.navigate(['/']);
   }
 }

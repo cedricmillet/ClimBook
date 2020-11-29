@@ -13,7 +13,7 @@
     <tbody>
         <tr *ngFor="let bloc of voies">
             <td>{{bloc.id}}</td>
-            <td>{{bloc.niveau.nom}}</td>
+            <td>{{bloc?.niveau?.nom || 'N/A'}}</td>
             <td>{{bloc.nom}}</td>
             <td>{{bloc.datev | date}}</td>
             <td>
@@ -27,3 +27,11 @@
         </tr>
     </tbody>
 </table>
+
+<!-- add -->
+<section class="center mt-2">
+    <button mat-button class="icon-add" (click)="addOne()">
+        <mat-icon>add_circle</mat-icon>
+        Ajouter un nouveau bloc
+    </button>
+</section>

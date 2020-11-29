@@ -30,7 +30,7 @@ export class ApiService {
           res(data)
         },
         error => {
-          console.log("api.service : erreur requete : ", error)
+          console.log("api.service : erreur requete http_get : ", error)
           //this.snackMsg("Erreur - HTTP GET - réponse API : " + error.status, 6000)
           rej(error)
         }
@@ -38,6 +38,22 @@ export class ApiService {
       })
   }
   
+  http_put(url, data) {
+    return new Promise(async (res, rej) => {
+      const r = await this.http.put(url, data).subscribe(
+        (data: any) => {
+          if (!data) rej(data);
+          else res(data);
+        },
+        error => {
+          console.log("api.service : erreur requete http_put: ", error)
+          //this.snackMsg("Erreur - HTTP POST - réponse API : " + error.status, 6000)
+          rej(error)
+        }
+        );
+      })
+  }
+
   http_post(url, data) {
     return new Promise(async (res, rej) => {
       const r = await this.http.post(url, data).subscribe(
@@ -46,7 +62,7 @@ export class ApiService {
           else res(data);
         },
         error => {
-          console.log("api.service : erreur requete : ", error)
+          console.log("api.service : erreur requete http_post : ", error)
           //this.snackMsg("Erreur - HTTP POST - réponse API : " + error.status, 6000)
           rej(error)
         }
