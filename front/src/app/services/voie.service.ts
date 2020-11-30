@@ -27,5 +27,21 @@ export class VoieService {
         console.log("Erreur requete : ", e)
       });
     }
+  
+  async getBestGrimp(voieId: number) {
+    const url = this.api.get_uri(`/voies/${voieId}/bestgrimp`);
+    return await <any>this.api.http_get(url).catch(e => {
+      console.log("Erreur requete : ", e)
+    });
+  }
+
+  async getTempsmoyen(voieId: number) {
+    const url = this.api.get_uri(`/voies/${voieId}/avg`);
+    const res = await <any>this.api.http_get(url).catch(e => {
+      console.log("Erreur requete : ", e)
+    });
+    return res.length > 0 ? res[0].avg : null;
+  }
+
   }
   

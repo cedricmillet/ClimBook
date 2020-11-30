@@ -78,28 +78,26 @@ export class CalendarCtrl {
 
   @Get("/:id/bestgrimp")
   //@UseAuth(AuthCheck)
-  async bestGrimpOfVoie(@PathParams("id") id: string, @QueryParams() params: any): Promise<any> {
-    //const q: string = `SELECT getBestGrimp($1) as bests FROM voies WHERE id=$1`;
-    const q: string = `SELECT getBestGrimp($1) as bests FROM voies WHERE id=$1`;
-    const r: string[] = [id];
+  async bestGrimpOfVoie(@PathParams("id") id: number, @QueryParams() params: any): Promise<any> {
+    const q: string = `SELECT * FROM getBestGrimp($1) AS (user_id INTEGER, pseudo VARCHAR, chrono TIME);`;
+    const r:  any[] = [id];
     const pool = DBManager.getPool();
     const result = await pool.query(q, r);
 
     if (!result.rows) return JSON.stringify([]);
     return JSON.stringify(result.rows);
-    //manip du json
-    /*
-    const rArr = [];
-    result.rows.forEach(row => {
-      let escaped : string = (row['bests'].toString().substring(1));
-      escaped = escaped.substring(0, escaped.length - 1);
-      const cols = escaped.split(',');
-      rArr.push({
-        id_client: cols[0],
-        pseudo: cols[1]
-      })
-    });
-    return JSON.stringify(rArr);*/
+  }
+
+  @Get("/:id/avg")
+  //@UseAuth(AuthCheck)
+  async getTempsMoyen(@PathParams("id") id: number, @QueryParams() params: any): Promise<any> {
+    const q: string = `SELECT getTempsMoyen($1) as avg`;
+    const r:  any[] = [id];
+    const pool = DBManager.getPool();
+    const result = await pool.query(q, r);
+
+    if (!result.rows) return JSON.stringify([]);
+    return JSON.stringify(result.rows);
   }
 
 }

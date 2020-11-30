@@ -172,7 +172,7 @@ INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(6,6,7);
 -- Retourne le nombre de validations pour une ascencion donnée
 CREATE OR REPLACE FUNCTION
    getNombreVal(id_a INTEGER)
-RETURNS Record AS $$
+RETURNS bigint AS $$
     SELECT COUNT(*) FROM chronos
     WHERE chronos.id_ascension = id_a
     
@@ -192,14 +192,13 @@ $$ LANGUAGE SQL;
 SELECT * FROM getNiveauMoyen(2) AS (Moyenne Integer);*/ --L'utilisateur 2 à effectué 2 ascension de difficultés 3 et 8, doonc retourne 5
 	
 -- Retourne le temps moyen sur une voie donnée
-CREATE OR REPLACE FUNCTION getTempsMoyen(idTestVoie Integer) RETURNS record AS $$		
+CREATE OR REPLACE FUNCTION getTempsMoyen(idTestVoie Integer) RETURNS interval AS $$		
 	SELECT AVG(temps) FROM ascensions,voies
 	WHERE voies.id = idTestVoie
 	AND ascensions.id_voie = voies.id	
-		
 $$ LANGUAGE SQL;
 
-/*SELECT * FROM getTempsMoyen(1) AS (Moyenne TIME);*/
+/*SELECT getTempsMoyen(1)*/
 
 --  Calcule et retourne les 5 meilleurs grimpeurs d'une voie donnée
 CREATE OR REPLACE FUNCTION
@@ -211,10 +210,10 @@ RETURNS SETOF record AS $$
     AND utilisateurs.id = ascensions.id_utilisateur
     ORDER BY ascensions.temps ASC LIMIT 5
     
-$$ LANGUAGE SQL;
+$$ LANGUAGE plpgsql;
 
 /*
-SELECT * FROM getBestGrimp(1) AS (id_u INTEGER, pseudo_u VARCHAR);*/
+SELECT * FROM getBestGrimp(1) AS (user_id INTEGER, pseudo VARCHAR, chrono TIME);*/
 
 
 

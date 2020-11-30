@@ -14,6 +14,8 @@ export class EcranBlocsComponent implements OnInit {
 
   public voies;
   selectedBlock = null;
+  selectedBlockClassement = [];
+  selectedBlockAvg = null;
 
   constructor(private blocService: VoieService) { }
 
@@ -27,7 +29,12 @@ export class EcranBlocsComponent implements OnInit {
   }
 
 
-  selectBloc(bloc) {
-    
+  async selectBloc(bloc) {
+    this.selectedBlock = bloc;
+    this.selectedBlockClassement = null;
+    this.selectedBlockAvg = null;
+
+    this.selectedBlockAvg = await this.blocService.getTempsmoyen(bloc.id);
+    this.selectedBlockClassement = await this.blocService.getBestGrimp(bloc.id);
   }
 }

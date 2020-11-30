@@ -93,3 +93,18 @@
 }
 
 
+.classement .rang-classement:nth-child(2n) {
+    background: rgba(236, 235, 235, 0.932);
+}
+.classement .rang-classement:nth-child(2n+1) {
+    background: rgba(221, 220, 220, 0.932);
+}
+
+
+.classement .rank-validate {
+    cursor:pointer;
+}
+.classement .rank-validate:hover {
+    background: rgba(236, 243, 134, 0.945);
+
+}

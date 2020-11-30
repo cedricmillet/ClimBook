@@ -14,7 +14,7 @@
 
             <mat-progress-bar *ngIf="!voies" mode="indeterminate" class="mt-2"></mat-progress-bar>
             <mat-list role="list" class="block-list">
-                <mat-list-item role="listitem" class="block" *ngFor="let bloc of (voies)" (click)="selectedBlock=bloc" [attr.data-selected]="selectedBlock == bloc">
+                <mat-list-item role="listitem" class="block" *ngFor="let bloc of (voies)" (click)="selectBloc(bloc)" [attr.data-selected]="selectedBlock == bloc">
                     <span class="level-circle" [ngClass]="bloc?.niveau?.couleur" mat-list-icon>{{bloc?.niveau?.nom}}</span>
                     <div mat-line>{{bloc?.nom}}</div>
                     <div mat-line>{{bloc?.datev | date:'d MMMM y'}}</div>
@@ -65,14 +65,28 @@
                             {{selectedBlock?.niveau?.difficulte}} points
                         </div>
                     </div>
+                    <div class="row mt-1">
+                        <div class="col col-4">
+                            <mat-icon>speed</mat-icon>
+                        </div>
+                        <div class="col col-8">
+                            {{selectedBlockAvg?.minutes}} min {{selectedBlockAvg?.seconds}} s
+                        </div>
+                    </div>
 
+                    <p *ngIf="!selectedBlockClassement">récupération...</p>
+                    <section *ngIf="selectedBlockClassement">
+                        <mat-list role="list" class="classement">
+                            <div mat-subheader>Meilleures ascencions</div>
+                            <mat-list-item *ngFor="let rank of selectedBlockClassement; let i=index">
+                                <div mat-line># {{i+1}}</div>
+                                <div mat-line> {{rank.chrono}} par <b>{{rank.pseudo}}</b> </div>
+                                <mat-icon mat-list-icon class="rank-validate">check_circle_outline</mat-icon>
+                              </mat-list-item>
+                        </mat-list>
+                    </section>
                     
-                    
-                    <p>
-                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                        bred for hunting.
-                    </p>
+
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-button><mat-icon>check_circle_outline</mat-icon> Marquer cette voie comme réussie</button>

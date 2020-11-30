@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-ecran-classements',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EcranClassementsComponent implements OnInit {
 
-  constructor() { }
+  classement = [];
+
+  constructor(private api : ApiService) { }
 
   ngOnInit(): void {
+    this.refreshClassement();
+  }
+
+  async refreshClassement() {
+    const url = this.api.get_uri(`/classement`);
+    this.classement = <any>await this.api.http_get(url);
+    console.log(this.classement)
   }
 
 }
