@@ -120,61 +120,57 @@ INSERT INTO roles (id, role) VALUES(2, 'client');
 
 -- AJOUT DES UTILISATEURS
 --
-INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(1, 1, 'admin', crypt('000000', gen_salt('bf')), 'admin@domain.com',true);
-INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(2, 2, 'client', crypt('123456', gen_salt('bf')), 'client@domain.com',false);
-INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(3, 1, 'cedric', crypt('000000', gen_salt('bf')), 'cedric@domain.com',true);
-INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(4, 1, 'tom', crypt('000000', gen_salt('bf')), 'tom@domain.com',true);
-INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(5, 1, 'arnaud', crypt('000000', gen_salt('bf')), 'arnaud@domain.com',true);
-INSERT INTO utilisateurs (id,id_role, pseudo, mdp, email,isabonne) VALUES(6, 1, 'jean', crypt('000000', gen_salt('bf')), 'jean@domain.com',true);
+INSERT INTO utilisateurs (id_role, pseudo, mdp, email,isabonne) VALUES(1, 'admin', crypt('000000', gen_salt('bf')), 'admin@domain.com',true);
+INSERT INTO utilisateurs (id_role, pseudo, mdp, email,isabonne) VALUES(2, 'client', crypt('123456', gen_salt('bf')), 'client@domain.com',false);
+INSERT INTO utilisateurs (id_role, pseudo, mdp, email,isabonne) VALUES(1, 'cedric', crypt('000000', gen_salt('bf')), 'cedric@domain.com',true);
+INSERT INTO utilisateurs (id_role, pseudo, mdp, email,isabonne) VALUES(1, 'tom', crypt('000000', gen_salt('bf')), 'tom@domain.com',true);
+INSERT INTO utilisateurs (id_role, pseudo, mdp, email,isabonne) VALUES(1, 'arnaud', crypt('000000', gen_salt('bf')), 'arnaud@domain.com',true);
+INSERT INTO utilisateurs (id_role, pseudo, mdp, email,isabonne) VALUES(1, 'jean', crypt('000000', gen_salt('bf')), 'jean@domain.com',true);
 -- AJOUT DES NIVEAUX
 --
-INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(1,3,'3A','blanc');
-INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(2,4,'4A','vert');
-INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(3,8,'5A','bleu');
-INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(4,15,'6B','rouge');
-INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(5,18,'7B','noir');
-INSERT INTO niveaux (id,difficulte,nom,couleur) VALUES(6,25,'8A','violet');
+INSERT INTO niveaux (difficulte,nom,couleur) VALUES(4,'4A','vert');
+INSERT INTO niveaux (difficulte,nom,couleur) VALUES(3,'3A','blanc');
+INSERT INTO niveaux (difficulte,nom,couleur) VALUES(8,'5A','bleu');
+INSERT INTO niveaux (difficulte,nom,couleur) VALUES(15,'6B','rouge');
+INSERT INTO niveaux (difficulte,nom,couleur) VALUES(18,'7B','noir');
+INSERT INTO niveaux (difficulte,nom,couleur) VALUES(25,'8A','violet');
 --
 -- AJOUT DES VOIES
 --
-INSERT INTO voies (id,id_niveau,nom) VALUES(1,6,'The Crux');
-INSERT INTO voies (id,id_niveau,nom) VALUES(2,5,'The big Wall');
-INSERT INTO voies (id,id_niveau,nom) VALUES(3,2,'Un nouvel espoir');
+INSERT INTO voies (id_niveau,nom) VALUES(6,'The Crux');
+INSERT INTO voies (id_niveau,nom) VALUES(5,'The big Wall');
+INSERT INTO voies (id_niveau,nom) VALUES(2,'Un nouvel espoir');
 
 
 -- AJOUT DES ASCENSION
 --
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(1,2,1,'32:12.32');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(2,2,2,'39:12.48');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(3,2,3,'37:12.48');
-
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(4,3,1,'32:10.2');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(5,3,2,'36:11.2');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(6,3,3,'32:10.2');
-
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(7,4,1,'38:10.2');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(8,4,2,'41:20.7');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(9,4,3,'55:10.4');
-
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(10,5,1,'41:10.6');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(11,5,2,'10:10.1');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(12,5,3,'20:10.7');
-
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(13,6,1,'16:10.9');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(14,6,2,'36:40.5');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(15,6,3,'26:10.1');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(2,1,'32:12.32');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(2,2,'39:12.48');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(2,3,'37:12.48');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(3,1,'32:10.2');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(3,2,'36:11.2');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(3,3,'32:10.2');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(4,1,'38:10.2');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(4,2,'41:20.7');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(4,3,'55:10.4');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(5,1,'41:10.6');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(5,2,'10:10.1');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(5,3,'20:10.7');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(6,1,'16:10.9');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(6,2,'36:40.5');
+INSERT INTO ascensions (id_utilisateur,id_voie,temps) VALUES(6,3,'26:10.1');
 
 
 
 --
 -- AJOUT DES VALIDATIONS
 --
-INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(1,1,1);
-INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(2,2,1);
-INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(3,7,6);
-INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(4,5,4);
-INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(5,3,5);
-INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(6,6,6);
+INSERT INTO chronos (id_ascension,id_utilisateur) VALUES(1,1);
+INSERT INTO chronos (id_ascension,id_utilisateur) VALUES(2,1);
+INSERT INTO chronos (id_ascension,id_utilisateur) VALUES(7,6);
+INSERT INTO chronos (id_ascension,id_utilisateur) VALUES(5,4);
+INSERT INTO chronos (id_ascension,id_utilisateur) VALUES(3,5);
+INSERT INTO chronos (id_ascension,id_utilisateur) VALUES(6,6);
 
 
 /*-----------------------------------------

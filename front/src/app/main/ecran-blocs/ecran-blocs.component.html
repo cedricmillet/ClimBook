@@ -69,7 +69,10 @@
                         <div class="col col-4">
                             <mat-icon>speed</mat-icon>
                         </div>
-                        <div class="col col-8">
+                        <div class="col col-8" *ngIf="!selectedBlockAvg">
+                            Aucun temps moyen disponible.
+                        </div>
+                        <div class="col col-8" *ngIf="selectedBlockAvg">
                             {{selectedBlockAvg?.minutes}} min {{selectedBlockAvg?.seconds}} s
                         </div>
                     </div>

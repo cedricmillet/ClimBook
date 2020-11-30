@@ -14,7 +14,7 @@ export class CalendarCtrl {
 
   @Get()
   //@UseAuth(AuthCheck)
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<any[]> {
     
     const query: string = `SELECT * FROM getclassementgeneral() AS (user_id INTEGER, pseudo VARCHAR, score BIGINT);`;
     const values = [];
