@@ -1,0 +1,34 @@
+.classement {
+
+}
+
+.classement .position {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    margin-bottom: .5em;
+    cursor: pointer;
+}
+
+.classement .position .rang {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: .2em;
+    padding: .35em;
+}
+
+.classement .position:nth-of-type(1) .rang { background: rgba(233, 218, 3, 0.925); }
+.classement .position:nth-of-type(2) .rang { background: rgba(182, 182, 179, 0.925); }
+.classement .position:nth-of-type(3) .rang { background: rgba(160, 114, 45, 0.925); }
+
+.classement .position .score {
+    font-weight: bold;
+    position: relative;
+}
+.classement .position .score::after {
+    content: 'Pts';
+    position: absolute;
+    top: 0;
+    right: -2em;
+    font-size: .7em;
+    font-weight: normal;
+}

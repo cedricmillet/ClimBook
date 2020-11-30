@@ -1,7 +1,19 @@
-<p>ecran-classements works!</p>
+<h2 class="mt-1">Classement général</h2>
 
-<mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let rang of classement">
-        {{rang.pseudo}}
+<mat-list role="list" class="classement mt-1">
+    <mat-list-item role="listitem" class="position" *ngFor="let rang of classement; let i = index">
+        <div class="row">
+            <div class="col col-3">
+                <span class="rang" *ngIf="i==0">1er</span>
+                <span class="rang" *ngIf="i==1">2ème</span>
+                <span class="rang" *ngIf="i==2">3ème</span>
+                <span class="rang" *ngIf="i>2"># {{i+1}}</span>
+            </div>
+            <div class="col col-7">{{rang.pseudo}}</div>
+            <div class="col col-2">
+                <span class="score">{{rang.score}}</span>
+            </div>
+        </div>
+        
     </mat-list-item>
 </mat-list>

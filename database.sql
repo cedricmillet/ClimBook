@@ -9,10 +9,10 @@ DROP TABLE IF EXISTS utilisateurs;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS niveaux;
 DROP EXTENSION IF EXISTS pgcrypto;
-DROP FUNCTION IF EXISTS getNiveauMoyen;
-DROP FUNCTION IF EXISTS getTempsMoyen;
-DROP FUNCTION IF EXISTS getBestGrimp;
-DROP FUNCTION IF EXISTS getNombreVal;
+DROP FUNCTION IF EXISTS getniveaumoyen;
+DROP FUNCTION IF EXISTS gettempsmoyen;
+DROP FUNCTION IF EXISTS getbestgrimp;
+DROP FUNCTION IF EXISTS getnombreval;
 --
 -- pgcrypto pour encoder les mot de passe
 --
@@ -146,11 +146,24 @@ INSERT INTO voies (id,id_niveau,nom) VALUES(3,2,'Un nouvel espoir');
 --
 INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(1,2,1,'32:12.32');
 INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(2,2,2,'39:12.48');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(3,3,1,'32:10.2');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(4,4,1,'31:10.2');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(5,5,1,'30:10.2');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(6,6,1,'26:10.2');
-INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(7,7,1,'25:10.2');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(3,2,3,'37:12.48');
+
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(4,3,1,'32:10.2');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(5,3,2,'36:11.2');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(6,3,3,'32:10.2');
+
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(7,4,1,'38:10.2');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(8,4,2,'41:20.7');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(9,4,3,'55:10.4');
+
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(10,5,1,'41:10.6');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(11,5,2,'10:10.1');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(12,5,3,'20:10.7');
+
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(13,6,1,'16:10.9');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(14,6,2,'36:40.5');
+INSERT INTO ascensions (id,id_utilisateur,id_voie,temps) VALUES(15,6,3,'26:10.1');
+
 
 
 --
@@ -161,7 +174,7 @@ INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(2,2,1);
 INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(3,7,6);
 INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(4,5,4);
 INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(5,3,5);
-INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(6,6,7);
+INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(6,6,6);
 
 
 /*-----------------------------------------
@@ -171,7 +184,7 @@ INSERT INTO chronos (id,id_ascension,id_utilisateur) VALUES(6,6,7);
 
 -- Retourne le nombre de validations pour une ascencion donnée
 CREATE OR REPLACE FUNCTION
-   getNombreVal(id_a INTEGER)
+   getnombreval(id_a INTEGER)
 RETURNS bigint AS $$
     SELECT COUNT(*) FROM chronos
     WHERE chronos.id_ascension = id_a
@@ -181,7 +194,7 @@ $$ LANGUAGE SQL;
 /* SELECT * FROM getNombreVal(2) AS (Nb INTEGER);*/
 
 -- Retourne le niveau moyen d'un utilisateur donné
-CREATE OR REPLACE FUNCTION getNiveauMoyen(idTestUtilisateur Integer) RETURNS record AS $$
+CREATE OR REPLACE FUNCTION getniveaumoyen(idTestUtilisateur Integer) RETURNS record AS $$
 	SELECT AVG(difficulte) FROM Niveaux WHERE Niveaux.id IN (
 			SELECT id_niveau FROM Voies WHERE Voies.id IN ( 
 				SELECT id_voie FROM Ascensions WHERE Ascensions.id_Utilisateur = idTestUtilisateur));
@@ -192,7 +205,7 @@ $$ LANGUAGE SQL;
 SELECT * FROM getNiveauMoyen(2) AS (Moyenne Integer);*/ --L'utilisateur 2 à effectué 2 ascension de difficultés 3 et 8, doonc retourne 5
 	
 -- Retourne le temps moyen sur une voie donnée
-CREATE OR REPLACE FUNCTION getTempsMoyen(idTestVoie Integer) RETURNS interval AS $$		
+CREATE OR REPLACE FUNCTION gettempsmoyen(idTestVoie Integer) RETURNS interval AS $$		
 	SELECT AVG(temps) FROM ascensions,voies
 	WHERE voies.id = idTestVoie
 	AND ascensions.id_voie = voies.id	
@@ -202,7 +215,7 @@ $$ LANGUAGE SQL;
 
 --  Calcule et retourne les 5 meilleurs grimpeurs d'une voie donnée
 CREATE OR REPLACE FUNCTION
-   getBestGrimp(id_v INTEGER)
+   getbestgrimp(id_v INTEGER)
 RETURNS SETOF record AS $$
     SELECT utilisateurs.id , utilisateurs.pseudo, ascensions.temps FROM utilisateurs, ascensions, voies
     WHERE voies.id = id_v
@@ -210,12 +223,29 @@ RETURNS SETOF record AS $$
     AND utilisateurs.id = ascensions.id_utilisateur
     ORDER BY ascensions.temps ASC LIMIT 5
     
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE SQL;
 
 /*
 SELECT * FROM getBestGrimp(1) AS (user_id INTEGER, pseudo VARCHAR, chrono TIME);*/
 
-
+-- Retourne le classement général, la liste des utilisateurs et leur score dasn le classement
+-- classement trié par nbre de points descendant
+CREATE OR REPLACE FUNCTION
+   getclassementgeneral()
+RETURNS SETOF record AS $$
+    SELECT 
+		utilisateurs.id,
+        utilisateurs.pseudo,
+		SUM(niveaux.difficulte) 
+	FROM ascensions, voies, niveaux, utilisateurs 
+	WHERE 
+		niveaux.id=voies.id_niveau 
+		AND ascensions.id_voie=voies.id
+		AND ascensions.id_utilisateur=utilisateurs.id
+	GROUP BY utilisateurs.id 
+	ORDER BY SUM(niveaux.difficulte) DESC;
+    
+$$ LANGUAGE SQL;
 
 
 /*-----------------------------------------
@@ -314,9 +344,9 @@ CREATE OR REPLACE FUNCTION miseajour()
 	newidbest INTEGER;
 	newpseudobest VARCHAR(20);
 	BEGIN
-	SELECT * INTO newtemps FROM getTempsMoyen(NEW.id_voie) AS (Record TIME);
-	SELECT * INTO newniveaux FROM getNiveauMoyen(NEW.id_utilisateur) AS (Moyenne Integer) ;
-	SELECT * INTO newidbest, newpseudobest FROM getBestGrimp(NEW.id_voie) AS (id_u INTEGER, pseudo_u VARCHAR);
+	SELECT * INTO newtemps FROM gettempsmoyen(NEW.id_voie) AS (Record TIME);
+	SELECT * INTO newniveaux FROM getniveaumoyen(NEW.id_utilisateur) AS (Moyenne Integer) ;
+	SELECT * INTO newidbest, newpseudobest FROM getbestgrimp(NEW.id_voie) AS (id_u INTEGER, pseudo_u VARCHAR);
 	RAISE NOTICE 'votre nouveau niveau est : % et le nouveau temps moyen voie : %', newniveaux , newtemps;
 	RAISE NOTICE 'Le meilleur grimpeur de la voie est maintenant : % ', newpseudobest;
 	RETURN NULL;

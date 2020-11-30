@@ -5,6 +5,7 @@ import { AuthCheck } from "../guards/login.guard";
 import { DAO_Utilisateur } from '../dao/utilisateurs.dao';
 import { User, UserBuilder } from "../entities/user.entity";
 import { DAO_Role } from '../dao/roles.dao';
+import { DBManager } from "../dao";
 
 
 @Controller("/classement")
@@ -14,14 +15,13 @@ export class CalendarCtrl {
   @Get()
   //@UseAuth(AuthCheck)
   async findAll(): Promise<User[]> {
-    /*
-    const query: string = `SELECT public`;
-    const values = [newPassword, userId];
+    
+    const query: string = `SELECT * FROM getclassementgeneral() AS (user_id INTEGER, pseudo VARCHAR, score BIGINT);`;
+    const values = [];
     const pool = DBManager.getPool();
     const result = await pool.query(query, values);
     console.log(result)
-    return result.rows;*/
-    return [];
+    return result.rows;
   }
 
 
