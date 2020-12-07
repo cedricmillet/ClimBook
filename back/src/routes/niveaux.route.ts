@@ -5,7 +5,7 @@ import { Niveau, NiveauBuilder } from '../entities/niveau.entity';
 
 @Controller("/niveaux")
 @ContentType("json")
-export class CalendarCtrl {
+export class NiveauCtrl {
 
   /** list all */
   @Get()

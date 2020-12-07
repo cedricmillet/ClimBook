@@ -35,7 +35,7 @@ export class AuthController {
    */
   @Post("/login")
   @Status(200, Boolean).Description("Success")
-  async login(@Required() @BodyParams("login") login: string, @Required() @BodyParams("password") pass: string, @Session("user") user: any) {
+  async login(@Required() @BodyParams("login") login: string, @Required() @BodyParams("password") pass: string, @Session("user") user: any, @Session() session: any) {
     console.log(`>>> Identification utilisateur (${login}, ${pass})`);
     try {
       const usr: User = await Users.login(login, pass);
@@ -46,6 +46,9 @@ export class AuthController {
       //console.log("role = ", r, usr)
       user.id = usr.getId();
       user.role = r.getRoleName();
+
+      console.log("LOGIN OK ==> user = ", user)
+      console.log("SESSION =  ", session)
       return JSON.stringify({ success:true, user: usr.getData(), role: user.role });
     } catch (error) {
       throw new NotFound("Unknown User : " + error);
@@ -104,8 +107,8 @@ export class AuthController {
    */
   @Get("/status")
   @UseAuth(AuthCheck) // check utilisateur identifié
-  public check(@Session("user") user: any) {
-    return "OK !!!! : user =    " + JSON.stringify(user)
+  public check(@Session("user") user: any, @Session() sess: any) {
+    return "OK !!!! : session =    " + JSON.stringify(sess)
   }
 
   @Get("/admin")

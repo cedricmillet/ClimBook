@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
+import { ApiService } from 'src/app/services/api.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-ecran-progression',
@@ -7,12 +9,31 @@ import * as Chart from 'chart.js';
   styleUrls: ['./ecran-progression.component.css']
 })
 export class EcranProgressionComponent implements OnInit {
+  dernieresAscensions = [];
+
+
   canvas: any;
   ctx: any;
 
-  constructor() { }
+  constructor(private api : ApiService, private user: UserService) { }
   
   ngOnInit(): void {
+
+    this.laodProgression();
+
+  }
+
+  async laodProgression() {
+    const uid: number = this.user.data.id;
+    const url = this.api.get_uri(`/progression/${uid}`);
+    this.dernieresAscensions = <any>await this.api.http_get(url);
+    console.log(this.dernieresAscensions)
+    this.loadGraphDernieresAscensions();
+  }
+
+
+  loadGraphDernieresAscensions() {
+    
     this.canvas = document.getElementById('myChart');
     this.ctx = this.canvas.getContext('2d');
     const myChart = new Chart(this.ctx, {
@@ -35,4 +56,5 @@ export class EcranProgressionComponent implements OnInit {
       }
     });
   }
+
 }

@@ -8,7 +8,7 @@ import { User, UserBuilder } from '../entities/user.entity';
 
 @Controller("/utilisateurs")
 @ContentType("json")
-export class CalendarCtrl {
+export class UtilisateursCtrl {
 
   /** select all */
   @Get()

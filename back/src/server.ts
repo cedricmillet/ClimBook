@@ -53,10 +53,14 @@ export class Server {
     // Ajout des sessions
     this.app.getApp().set("trust proxy", 1); // trust first proxy
     this.app.use(session({
-      secret: "a5d9e1f7afa93x1q4",  // signature des cookies
-      resave: false,
+      secret: "keyboard cat",  // signature des cookies
+      resave: true,
       saveUninitialized: true,
-      cookie: {secure: false}
+      cookie: {
+        secure: false,
+        maxAge: 30*24*60*60*1000
+      },
+      
     }));
     this.app.use(CreateRequestSessionMiddleware);
   }

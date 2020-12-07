@@ -13,6 +13,8 @@ DROP FUNCTION IF EXISTS getniveaumoyen;
 DROP FUNCTION IF EXISTS gettempsmoyen;
 DROP FUNCTION IF EXISTS getbestgrimp;
 DROP FUNCTION IF EXISTS getnombreval;
+DROP FUNCTION IF EXISTS getclassementgeneral;
+DROP FUNCTION IF EXISTS getdernieresascensions;
 --
 -- pgcrypto pour encoder les mot de passe
 --
@@ -243,6 +245,25 @@ RETURNS SETOF record AS $$
     
 $$ LANGUAGE SQL;
 
+
+-- Retourne les dernieres ascensions d'un utilisateur donné
+CREATE OR REPLACE FUNCTION
+   getdernieresascensions(user_id INTEGER, nb_entries INTEGER)
+RETURNS SETOF record AS $$
+    SELECT voies.nom, niveaux.difficulte, niveaux.nom, niveaux.couleur 
+    FROM utilisateurs, ascensions, voies, niveaux
+    WHERE
+    ascensions.id_voie = voies.id
+    AND utilisateurs.id = ascensions.id_utilisateur
+    AND niveaux.id = voies.id_niveau
+	AND utilisateurs.id = user_id
+    ORDER BY ascensions.temps ASC LIMIT nb_entries
+    
+$$ LANGUAGE SQL;
+
+/*
+    SELECT * FROM getdernieresascensions(2, 10) AS (voie VARCHAR, niv_difficulte INTEGER, niv_cotation VARCHAR, couleur VARCHAR)
+*/
 
 /*-----------------------------------------
                 TRIGGERS

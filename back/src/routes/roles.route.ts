@@ -9,7 +9,7 @@ import { DAO_Role } from '../dao/roles.dao';
 
 @Controller("/roles")
 @ContentType("json")
-export class CalendarCtrl {
+export class RoleCtrl {
 
   @Get()
   //@UseAuth(AuthCheck)

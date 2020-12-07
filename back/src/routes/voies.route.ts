@@ -8,7 +8,7 @@ import { DBManager } from "../dao";
 
 @Controller("/voies")
 @ContentType("json")
-export class CalendarCtrl {
+export class VoieCtrl {
 
   @Get()
   //@UseAuth(AuthCheck)
