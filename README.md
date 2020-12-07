@@ -5,6 +5,11 @@ Progressive Web App intended for the management of a climbing gym.
 * [Cahier des charges](https://docs.google.com/document/d/13sVdpy0Ea0QqceZefBAknCtqHe0utRDcX6KWkRcdkI4/)
 * [Docker Hub Repository](https://hub.docker.com/r/thecyrion/bdd_cnam)
 
+Membres du groupe :
+* Cédric MILLET
+* Valentin DUTARTRE
+* Killian WYBAUW
+
 ## M. MARTIN,
 
 Pour lancer le projet :
