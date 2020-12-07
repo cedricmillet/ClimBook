@@ -5,25 +5,29 @@ Progressive Web App intended for the management of a climbing gym.
 * [Cahier des charges](https://docs.google.com/document/d/13sVdpy0Ea0QqceZefBAknCtqHe0utRDcX6KWkRcdkI4/)
 * [Docker Hub Repository](https://hub.docker.com/repository/docker/thecyrion/bdd_cnam)
 
-## Features clients
+## M. MARTIN,
 
-### TO DO
-* possibilité de rentrer un temps d'ascencion sur une voie
-* il est possible de vérifier un temps
-* courbe de progression sur chaque voie, 
-* courbe des niveaux des voies effectuées
-### DONE
+Pour lancer le projet :
+`docker-compose pull && docker-compose up`, le backend sera disponible sur `http://localhost:6323` et le frontend sur `http://localhost:6324`.
+
+
+## Features développées
+
 * connexion client/admin
 * creation de compte, avec choix de participation à la newsletter
 * affichage de la liste des voies
 * sur une voie, on peut y voir le temps moyen
 * affichage du classement général
-
-## Features admin
 * réinitialiser le mot de passe d'un client
 * gestion des voies (add edit, remove)
 * gestion des niveaux de voie (add, edit, remove)
 * gestion des utilisateurs (add, edit, remove)
+
+## Features non développées
+* ECRAN /blocs: possibilité de rentrer un temps d'ascencion sur une voie
+* ECRAN /blocs: il est possible de vérifier un temps
+* ECRAN /progression : courbe de progression sur chaque voie
+
 
 
 ## Lancement / Installation
